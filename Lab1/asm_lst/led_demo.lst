@@ -1,0 +1,74 @@
+A51 MACRO ASSEMBLER  LED_DEMO                                                             09/30/2023 06:17:41 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\led_demo.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE led_demo.asm SET(SMALL) DEBUG PRINT(.\Listings\led_demo.lst) OBJECT(.\O
+                      bjects\led_demo.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H  
+0000 02000E            2           LJMP MAIN_CODE  
+                       3     
+000B                   4     ORG 000BH        
+000B 020038            5               LJMP ISR_TIMER  
+                       6             
+000E                   7     MAIN_CODE:  
+000E 758901            8               MOV TMOD,#00000001B  
+0011 7400              9                   MOV A,#0x00  
+0013 F590             10               MOV P1,A  
+0015                  11     LOOP:     ;CLR TF0 // Clear interupt overflow
+0015 C28C             12               CLR TR0  
+0017 7B05             13               MOV R3,#0X05  
+0019 758C00           14     COUNTER:  MOV TH0,#0x00  
+001C 758A00           15                   MOV TL0,#0x00  
+001F D28C             16                   SETB TR0             
+0021 308DFD           17     BACK1:    JNB TF0, BACK1  
+0024 C28C             18               CLR TR0  
+0026 C28D             19               CLR TF0   
+0028 DBEF             20                       DJNZ R3, COUNTER  
+002A 75A882           21                   MOV IE,#0x82  
+002D 758CE8           22                       MOV TH0,#0xE8  
+0030 758AB9           23                   MOV TL0,#0xB9  
+0033 D28C             24                   SETB TR0  
+0035 308DFD           25     BACK2:    JNB TF0, BACK2  
+                      26     ;SJMP LOOP // (start of delay count)
+                      27     
+                      28     
+0038 D290             29     ISR_TIMER: SETB P1.0  
+003A B291             30                CPL P1.1  
+003C C290             31                        CLR P1.0  
+                      32                        ;SETB TF0 // set bit of overflow timer 0
+003E 80D5             33                        SJMP LOOP 
+                      34                        
+                      35                        ;RETI // return to next instruction of interupt end
+                      36      
+                      37     END  
+A51 MACRO ASSEMBLER  LED_DEMO                                                             09/30/2023 06:17:41 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK1. . . . . . .  C ADDR   0021H   A   
+BACK2. . . . . . .  C ADDR   0035H   A   
+COUNTER. . . . . .  C ADDR   0019H   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+ISR_TIMER. . . . .  C ADDR   0038H   A   
+LOOP . . . . . . .  C ADDR   0015H   A   
+MAIN_CODE. . . . .  C ADDR   000EH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

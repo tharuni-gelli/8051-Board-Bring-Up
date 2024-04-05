@@ -1,0 +1,95 @@
+AX51 MACRO ASSEMBLER  PART1                                                                 09/23/23 04:34:43 PAGE     1
+
+
+MACRO ASSEMBLER AX51 V3.15.3.0
+OBJECT MODULE PLACED IN .\part1.OBJ
+ASSEMBLER INVOKED BY: C:\SiliconLabs\SimplicityStudio\v5_2\developer\toolchains\keil_8051\9.60\BIN\AX51.exe C:\Users\THA
+                      RUNI GELLI\SimplicityStudio\v5_workspace\ESDLABWORK\part1.asm ERRORPRINT SET(SMALL,SILABS_STARTUP=
+                      1) DEBUG MACRO NOMOD51 INCDIR(C:/SiliconLabs/SimplicityStudio/v5_2/developer/sdks/8051/v4.3.0//Dev
+                      ice/shared/si8051Base;C:/SiliconLabs/SimplicityStudio/v5_2/developer/sdks/8051/v4.3.0//Device/EFM8
+                      BB1/inc) PRINT(.\part1.lst) COND SYMBOLS PAGEWIDTH(120) PAGELENGTH(65) OBJECT(.\part1.OBJ) 
+
+LOC    OBJ             LINE     SOURCE
+
+000000                    1     ORG 0000h; start the program
+                          2     
+000000 C3                 3     CLR C ; clear the carry flag
+                          4     
+                          5     
+000001 7440               6     MOV A, #0x40
+000003 F520               7     MOV 20h, A
+000005 F521               8     MOV 21h, A
+000007 75F080             9     MOV B, #0x80
+00000A E5F0              10     MOV A,B ; if divisor is zero enter end loop 1 and add value to error address
+00000C 6020              11     JZ ENDLOOP1
+                         12     
+00000E 85F022            13     MOV 22h, B
+                         14     
+000011 33                15     RLC A
+000012 401F              16     JC ENDLOOP2 ; if the caluculation exceeds the 8bit enter the end loop 2 and add value to
+                                error address
+                         17     
+000014 33                18     RLC A
+000015 401C              19     JC ENDLOOP2 ; if the caluculation exceeds the 8bit enter the end loop 2 and add value to
+                                error address
+                         20     
+                         21     
+                         22     
+000017 F5F0              23     MOV B, A
+                         24     
+000019 F523              25     MOV 23H, A ; move the updated value of y into its mentioned address
+                         26     
+00001B E520              27     MOV A,20h ; loading the accumulator with the initial X value so that we can perform divi
+                               sion
+                         28     
+                         29     
+                         30     ; to perform division
+00001D                   31     DIVISIONLOOP:
+00001D F9                32     MOV R1,A ; update the value of R1 after each subtraction
+00001E 95F0              33     SUBB A,B
+000020 4003              34     JC DIVISIONDONE ; means the A is negative and carry bit get sets
+000022 08                35     INC R0
+000023 80F8              36     SJMP DIVISIONLOOP
+                         37     
+                         38     
+000025                   39     DIVISIONDONE:
+000025 8824              40     MOV 24h, R0 ; load quotient into that address
+000027 8925              41     MOV 25h, R1 ; load reminder into that address
+000029 753000            42     MOV 30h,#0x00
+                         43     
+00002C                   44     ENDLOOP:
+00002C 80FE              45     SJMP ENDLOOP
+                         46     
+                         47     
+00002E                   48     ENDLOOP1:
+AX51 MACRO ASSEMBLER  PART1                                                                 09/23/23 04:34:43 PAGE     2
+
+00002E 753001            49     MOV 30h,#0x01
+000031 80FB              50     SJMP ENDLOOP1
+                         51     
+000033                   52     ENDLOOP2:
+000033 753002            53     MOV 30h,#0x02
+000036 80FB              54     SJMP ENDLOOP2
+                         55     
+                         56     
+                         57     END
+AX51 MACRO ASSEMBLER  PART1                                                                 09/23/23 04:34:43 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                      T Y P E  V A L U E     ATTRIBUTES
+
+B . . . . . . . . . . . . .  D  ADDR  00F0H     A   
+DIVISIONDONE. . . . . . . .  C  ADDR  0025H     R   SEG=?CO?PART1?0
+DIVISIONLOOP. . . . . . . .  C  ADDR  001DH     R   SEG=?CO?PART1?0
+ENDLOOP . . . . . . . . . .  C  ADDR  002CH     R   SEG=?CO?PART1?0
+ENDLOOP1. . . . . . . . . .  C  ADDR  002EH     R   SEG=?CO?PART1?0
+ENDLOOP2. . . . . . . . . .  C  ADDR  0033H     R   SEG=?CO?PART1?0
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S).
