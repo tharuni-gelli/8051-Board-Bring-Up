@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1700331735 source:c:\users\tharuni gelli\onedrive\documents\esd\lab4_spi\main.c
+	"at89c51ed2.h"
+	"mcs51reg.h"
+	<stdint.h>
+	"uart.h"
+	"spi.h"
+
+1700263167 c:\users\tharuni gelli\onedrive\documents\esd\lab4_spi\uart.h
+	<stdint.h>
+
+1700331757 c:\users\tharuni gelli\onedrive\documents\esd\lab4_spi\spi.h
+	"at89c51ed2.h"
+	"mcs51reg.h"
+	<stdint.h>
+	"uart.h"
+
+1700331700 source:c:\users\tharuni gelli\onedrive\documents\esd\lab4_spi\uart.c
+	"at89c51ed2.h"
+	"mcs51reg.h"
+	"uart.h"
+
+1700331771 source:c:\users\tharuni gelli\onedrive\documents\esd\lab4_spi\spi.c
+	"spi.h"
+

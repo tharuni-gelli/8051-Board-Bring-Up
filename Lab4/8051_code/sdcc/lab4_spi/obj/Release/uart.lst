@@ -1,0 +1,1866 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.2.0 #13081 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module uart
+                                      6 	.optsdcc -mmcs51 --model-large
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _char_to_int
+                                     12 	.globl _TF1
+                                     13 	.globl _TR1
+                                     14 	.globl _TF0
+                                     15 	.globl _TR0
+                                     16 	.globl _IE1
+                                     17 	.globl _IT1
+                                     18 	.globl _IE0
+                                     19 	.globl _IT0
+                                     20 	.globl _SM0
+                                     21 	.globl _SM1
+                                     22 	.globl _SM2
+                                     23 	.globl _REN
+                                     24 	.globl _TB8
+                                     25 	.globl _RB8
+                                     26 	.globl _TI
+                                     27 	.globl _RI
+                                     28 	.globl _CY
+                                     29 	.globl _AC
+                                     30 	.globl _F0
+                                     31 	.globl _RS1
+                                     32 	.globl _RS0
+                                     33 	.globl _OV
+                                     34 	.globl _F1
+                                     35 	.globl _P
+                                     36 	.globl _RD
+                                     37 	.globl _WR
+                                     38 	.globl _T1
+                                     39 	.globl _T0
+                                     40 	.globl _INT1
+                                     41 	.globl _INT0
+                                     42 	.globl _TXD0
+                                     43 	.globl _TXD
+                                     44 	.globl _RXD0
+                                     45 	.globl _RXD
+                                     46 	.globl _P3_7
+                                     47 	.globl _P3_6
+                                     48 	.globl _P3_5
+                                     49 	.globl _P3_4
+                                     50 	.globl _P3_3
+                                     51 	.globl _P3_2
+                                     52 	.globl _P3_1
+                                     53 	.globl _P3_0
+                                     54 	.globl _P2_7
+                                     55 	.globl _P2_6
+                                     56 	.globl _P2_5
+                                     57 	.globl _P2_4
+                                     58 	.globl _P2_3
+                                     59 	.globl _P2_2
+                                     60 	.globl _P2_1
+                                     61 	.globl _P2_0
+                                     62 	.globl _P1_7
+                                     63 	.globl _P1_6
+                                     64 	.globl _P1_5
+                                     65 	.globl _P1_4
+                                     66 	.globl _P1_3
+                                     67 	.globl _P1_2
+                                     68 	.globl _P1_1
+                                     69 	.globl _P1_0
+                                     70 	.globl _P0_7
+                                     71 	.globl _P0_6
+                                     72 	.globl _P0_5
+                                     73 	.globl _P0_4
+                                     74 	.globl _P0_3
+                                     75 	.globl _P0_2
+                                     76 	.globl _P0_1
+                                     77 	.globl _P0_0
+                                     78 	.globl _PS
+                                     79 	.globl _PT1
+                                     80 	.globl _PX1
+                                     81 	.globl _PT0
+                                     82 	.globl _PX0
+                                     83 	.globl _EA
+                                     84 	.globl _ES
+                                     85 	.globl _ET1
+                                     86 	.globl _EX1
+                                     87 	.globl _ET0
+                                     88 	.globl _EX0
+                                     89 	.globl _BREG_F7
+                                     90 	.globl _BREG_F6
+                                     91 	.globl _BREG_F5
+                                     92 	.globl _BREG_F4
+                                     93 	.globl _BREG_F3
+                                     94 	.globl _BREG_F2
+                                     95 	.globl _BREG_F1
+                                     96 	.globl _BREG_F0
+                                     97 	.globl _P5_7
+                                     98 	.globl _P5_6
+                                     99 	.globl _P5_5
+                                    100 	.globl _P5_4
+                                    101 	.globl _P5_3
+                                    102 	.globl _P5_2
+                                    103 	.globl _P5_1
+                                    104 	.globl _P5_0
+                                    105 	.globl _P4_7
+                                    106 	.globl _P4_6
+                                    107 	.globl _P4_5
+                                    108 	.globl _P4_4
+                                    109 	.globl _P4_3
+                                    110 	.globl _P4_2
+                                    111 	.globl _P4_1
+                                    112 	.globl _P4_0
+                                    113 	.globl _PX0L
+                                    114 	.globl _PT0L
+                                    115 	.globl _PX1L
+                                    116 	.globl _PT1L
+                                    117 	.globl _PSL
+                                    118 	.globl _PT2L
+                                    119 	.globl _PPCL
+                                    120 	.globl _EC
+                                    121 	.globl _CCF0
+                                    122 	.globl _CCF1
+                                    123 	.globl _CCF2
+                                    124 	.globl _CCF3
+                                    125 	.globl _CCF4
+                                    126 	.globl _CR
+                                    127 	.globl _CF
+                                    128 	.globl _TF2
+                                    129 	.globl _EXF2
+                                    130 	.globl _RCLK
+                                    131 	.globl _TCLK
+                                    132 	.globl _EXEN2
+                                    133 	.globl _TR2
+                                    134 	.globl _C_T2
+                                    135 	.globl _CP_RL2
+                                    136 	.globl _T2CON_7
+                                    137 	.globl _T2CON_6
+                                    138 	.globl _T2CON_5
+                                    139 	.globl _T2CON_4
+                                    140 	.globl _T2CON_3
+                                    141 	.globl _T2CON_2
+                                    142 	.globl _T2CON_1
+                                    143 	.globl _T2CON_0
+                                    144 	.globl _PT2
+                                    145 	.globl _ET2
+                                    146 	.globl _TMOD
+                                    147 	.globl _TL1
+                                    148 	.globl _TL0
+                                    149 	.globl _TH1
+                                    150 	.globl _TH0
+                                    151 	.globl _TCON
+                                    152 	.globl _SP
+                                    153 	.globl _SCON
+                                    154 	.globl _SBUF0
+                                    155 	.globl _SBUF
+                                    156 	.globl _PSW
+                                    157 	.globl _PCON
+                                    158 	.globl _P3
+                                    159 	.globl _P2
+                                    160 	.globl _P1
+                                    161 	.globl _P0
+                                    162 	.globl _IP
+                                    163 	.globl _IE
+                                    164 	.globl _DP0L
+                                    165 	.globl _DPL
+                                    166 	.globl _DP0H
+                                    167 	.globl _DPH
+                                    168 	.globl _B
+                                    169 	.globl _ACC
+                                    170 	.globl _EECON
+                                    171 	.globl _KBF
+                                    172 	.globl _KBE
+                                    173 	.globl _KBLS
+                                    174 	.globl _BRL
+                                    175 	.globl _BDRCON
+                                    176 	.globl _T2MOD
+                                    177 	.globl _SPDAT
+                                    178 	.globl _SPSTA
+                                    179 	.globl _SPCON
+                                    180 	.globl _SADEN
+                                    181 	.globl _SADDR
+                                    182 	.globl _WDTPRG
+                                    183 	.globl _WDTRST
+                                    184 	.globl _P5
+                                    185 	.globl _P4
+                                    186 	.globl _IPH1
+                                    187 	.globl _IPL1
+                                    188 	.globl _IPH0
+                                    189 	.globl _IPL0
+                                    190 	.globl _IEN1
+                                    191 	.globl _IEN0
+                                    192 	.globl _CMOD
+                                    193 	.globl _CL
+                                    194 	.globl _CH
+                                    195 	.globl _CCON
+                                    196 	.globl _CCAPM4
+                                    197 	.globl _CCAPM3
+                                    198 	.globl _CCAPM2
+                                    199 	.globl _CCAPM1
+                                    200 	.globl _CCAPM0
+                                    201 	.globl _CCAP4L
+                                    202 	.globl _CCAP3L
+                                    203 	.globl _CCAP2L
+                                    204 	.globl _CCAP1L
+                                    205 	.globl _CCAP0L
+                                    206 	.globl _CCAP4H
+                                    207 	.globl _CCAP3H
+                                    208 	.globl _CCAP2H
+                                    209 	.globl _CCAP1H
+                                    210 	.globl _CCAP0H
+                                    211 	.globl _CKCON1
+                                    212 	.globl _CKCON0
+                                    213 	.globl _CKRL
+                                    214 	.globl _AUXR1
+                                    215 	.globl _AUXR
+                                    216 	.globl _TH2
+                                    217 	.globl _TL2
+                                    218 	.globl _RCAP2H
+                                    219 	.globl _RCAP2L
+                                    220 	.globl _T2CON
+                                    221 	.globl _print_number_hex_PARM_2
+                                    222 	.globl _putchar
+                                    223 	.globl _getchar
+                                    224 	.globl _int_to_char
+                                    225 	.globl _print_number_hex
+                                    226 	.globl _my_printf
+                                    227 	.globl _print_number
+                                    228 	.globl _fetch_number
+                                    229 	.globl _ms_delay
+                                    230 	.globl _us_delay
+                                    231 ;--------------------------------------------------------
+                                    232 ; special function registers
+                                    233 ;--------------------------------------------------------
+                                    234 	.area RSEG    (ABS,DATA)
+      000000                        235 	.org 0x0000
+                           0000C8   236 _T2CON	=	0x00c8
+                           0000CA   237 _RCAP2L	=	0x00ca
+                           0000CB   238 _RCAP2H	=	0x00cb
+                           0000CC   239 _TL2	=	0x00cc
+                           0000CD   240 _TH2	=	0x00cd
+                           00008E   241 _AUXR	=	0x008e
+                           0000A2   242 _AUXR1	=	0x00a2
+                           000097   243 _CKRL	=	0x0097
+                           00008F   244 _CKCON0	=	0x008f
+                           0000AF   245 _CKCON1	=	0x00af
+                           0000FA   246 _CCAP0H	=	0x00fa
+                           0000FB   247 _CCAP1H	=	0x00fb
+                           0000FC   248 _CCAP2H	=	0x00fc
+                           0000FD   249 _CCAP3H	=	0x00fd
+                           0000FE   250 _CCAP4H	=	0x00fe
+                           0000EA   251 _CCAP0L	=	0x00ea
+                           0000EB   252 _CCAP1L	=	0x00eb
+                           0000EC   253 _CCAP2L	=	0x00ec
+                           0000ED   254 _CCAP3L	=	0x00ed
+                           0000EE   255 _CCAP4L	=	0x00ee
+                           0000DA   256 _CCAPM0	=	0x00da
+                           0000DB   257 _CCAPM1	=	0x00db
+                           0000DC   258 _CCAPM2	=	0x00dc
+                           0000DD   259 _CCAPM3	=	0x00dd
+                           0000DE   260 _CCAPM4	=	0x00de
+                           0000D8   261 _CCON	=	0x00d8
+                           0000F9   262 _CH	=	0x00f9
+                           0000E9   263 _CL	=	0x00e9
+                           0000D9   264 _CMOD	=	0x00d9
+                           0000A8   265 _IEN0	=	0x00a8
+                           0000B1   266 _IEN1	=	0x00b1
+                           0000B8   267 _IPL0	=	0x00b8
+                           0000B7   268 _IPH0	=	0x00b7
+                           0000B2   269 _IPL1	=	0x00b2
+                           0000B3   270 _IPH1	=	0x00b3
+                           0000C0   271 _P4	=	0x00c0
+                           0000E8   272 _P5	=	0x00e8
+                           0000A6   273 _WDTRST	=	0x00a6
+                           0000A7   274 _WDTPRG	=	0x00a7
+                           0000A9   275 _SADDR	=	0x00a9
+                           0000B9   276 _SADEN	=	0x00b9
+                           0000C3   277 _SPCON	=	0x00c3
+                           0000C4   278 _SPSTA	=	0x00c4
+                           0000C5   279 _SPDAT	=	0x00c5
+                           0000C9   280 _T2MOD	=	0x00c9
+                           00009B   281 _BDRCON	=	0x009b
+                           00009A   282 _BRL	=	0x009a
+                           00009C   283 _KBLS	=	0x009c
+                           00009D   284 _KBE	=	0x009d
+                           00009E   285 _KBF	=	0x009e
+                           0000D2   286 _EECON	=	0x00d2
+                           0000E0   287 _ACC	=	0x00e0
+                           0000F0   288 _B	=	0x00f0
+                           000083   289 _DPH	=	0x0083
+                           000083   290 _DP0H	=	0x0083
+                           000082   291 _DPL	=	0x0082
+                           000082   292 _DP0L	=	0x0082
+                           0000A8   293 _IE	=	0x00a8
+                           0000B8   294 _IP	=	0x00b8
+                           000080   295 _P0	=	0x0080
+                           000090   296 _P1	=	0x0090
+                           0000A0   297 _P2	=	0x00a0
+                           0000B0   298 _P3	=	0x00b0
+                           000087   299 _PCON	=	0x0087
+                           0000D0   300 _PSW	=	0x00d0
+                           000099   301 _SBUF	=	0x0099
+                           000099   302 _SBUF0	=	0x0099
+                           000098   303 _SCON	=	0x0098
+                           000081   304 _SP	=	0x0081
+                           000088   305 _TCON	=	0x0088
+                           00008C   306 _TH0	=	0x008c
+                           00008D   307 _TH1	=	0x008d
+                           00008A   308 _TL0	=	0x008a
+                           00008B   309 _TL1	=	0x008b
+                           000089   310 _TMOD	=	0x0089
+                                    311 ;--------------------------------------------------------
+                                    312 ; special function bits
+                                    313 ;--------------------------------------------------------
+                                    314 	.area RSEG    (ABS,DATA)
+      000000                        315 	.org 0x0000
+                           0000AD   316 _ET2	=	0x00ad
+                           0000BD   317 _PT2	=	0x00bd
+                           0000C8   318 _T2CON_0	=	0x00c8
+                           0000C9   319 _T2CON_1	=	0x00c9
+                           0000CA   320 _T2CON_2	=	0x00ca
+                           0000CB   321 _T2CON_3	=	0x00cb
+                           0000CC   322 _T2CON_4	=	0x00cc
+                           0000CD   323 _T2CON_5	=	0x00cd
+                           0000CE   324 _T2CON_6	=	0x00ce
+                           0000CF   325 _T2CON_7	=	0x00cf
+                           0000C8   326 _CP_RL2	=	0x00c8
+                           0000C9   327 _C_T2	=	0x00c9
+                           0000CA   328 _TR2	=	0x00ca
+                           0000CB   329 _EXEN2	=	0x00cb
+                           0000CC   330 _TCLK	=	0x00cc
+                           0000CD   331 _RCLK	=	0x00cd
+                           0000CE   332 _EXF2	=	0x00ce
+                           0000CF   333 _TF2	=	0x00cf
+                           0000DF   334 _CF	=	0x00df
+                           0000DE   335 _CR	=	0x00de
+                           0000DC   336 _CCF4	=	0x00dc
+                           0000DB   337 _CCF3	=	0x00db
+                           0000DA   338 _CCF2	=	0x00da
+                           0000D9   339 _CCF1	=	0x00d9
+                           0000D8   340 _CCF0	=	0x00d8
+                           0000AE   341 _EC	=	0x00ae
+                           0000BE   342 _PPCL	=	0x00be
+                           0000BD   343 _PT2L	=	0x00bd
+                           0000BC   344 _PSL	=	0x00bc
+                           0000BB   345 _PT1L	=	0x00bb
+                           0000BA   346 _PX1L	=	0x00ba
+                           0000B9   347 _PT0L	=	0x00b9
+                           0000B8   348 _PX0L	=	0x00b8
+                           0000C0   349 _P4_0	=	0x00c0
+                           0000C1   350 _P4_1	=	0x00c1
+                           0000C2   351 _P4_2	=	0x00c2
+                           0000C3   352 _P4_3	=	0x00c3
+                           0000C4   353 _P4_4	=	0x00c4
+                           0000C5   354 _P4_5	=	0x00c5
+                           0000C6   355 _P4_6	=	0x00c6
+                           0000C7   356 _P4_7	=	0x00c7
+                           0000E8   357 _P5_0	=	0x00e8
+                           0000E9   358 _P5_1	=	0x00e9
+                           0000EA   359 _P5_2	=	0x00ea
+                           0000EB   360 _P5_3	=	0x00eb
+                           0000EC   361 _P5_4	=	0x00ec
+                           0000ED   362 _P5_5	=	0x00ed
+                           0000EE   363 _P5_6	=	0x00ee
+                           0000EF   364 _P5_7	=	0x00ef
+                           0000F0   365 _BREG_F0	=	0x00f0
+                           0000F1   366 _BREG_F1	=	0x00f1
+                           0000F2   367 _BREG_F2	=	0x00f2
+                           0000F3   368 _BREG_F3	=	0x00f3
+                           0000F4   369 _BREG_F4	=	0x00f4
+                           0000F5   370 _BREG_F5	=	0x00f5
+                           0000F6   371 _BREG_F6	=	0x00f6
+                           0000F7   372 _BREG_F7	=	0x00f7
+                           0000A8   373 _EX0	=	0x00a8
+                           0000A9   374 _ET0	=	0x00a9
+                           0000AA   375 _EX1	=	0x00aa
+                           0000AB   376 _ET1	=	0x00ab
+                           0000AC   377 _ES	=	0x00ac
+                           0000AF   378 _EA	=	0x00af
+                           0000B8   379 _PX0	=	0x00b8
+                           0000B9   380 _PT0	=	0x00b9
+                           0000BA   381 _PX1	=	0x00ba
+                           0000BB   382 _PT1	=	0x00bb
+                           0000BC   383 _PS	=	0x00bc
+                           000080   384 _P0_0	=	0x0080
+                           000081   385 _P0_1	=	0x0081
+                           000082   386 _P0_2	=	0x0082
+                           000083   387 _P0_3	=	0x0083
+                           000084   388 _P0_4	=	0x0084
+                           000085   389 _P0_5	=	0x0085
+                           000086   390 _P0_6	=	0x0086
+                           000087   391 _P0_7	=	0x0087
+                           000090   392 _P1_0	=	0x0090
+                           000091   393 _P1_1	=	0x0091
+                           000092   394 _P1_2	=	0x0092
+                           000093   395 _P1_3	=	0x0093
+                           000094   396 _P1_4	=	0x0094
+                           000095   397 _P1_5	=	0x0095
+                           000096   398 _P1_6	=	0x0096
+                           000097   399 _P1_7	=	0x0097
+                           0000A0   400 _P2_0	=	0x00a0
+                           0000A1   401 _P2_1	=	0x00a1
+                           0000A2   402 _P2_2	=	0x00a2
+                           0000A3   403 _P2_3	=	0x00a3
+                           0000A4   404 _P2_4	=	0x00a4
+                           0000A5   405 _P2_5	=	0x00a5
+                           0000A6   406 _P2_6	=	0x00a6
+                           0000A7   407 _P2_7	=	0x00a7
+                           0000B0   408 _P3_0	=	0x00b0
+                           0000B1   409 _P3_1	=	0x00b1
+                           0000B2   410 _P3_2	=	0x00b2
+                           0000B3   411 _P3_3	=	0x00b3
+                           0000B4   412 _P3_4	=	0x00b4
+                           0000B5   413 _P3_5	=	0x00b5
+                           0000B6   414 _P3_6	=	0x00b6
+                           0000B7   415 _P3_7	=	0x00b7
+                           0000B0   416 _RXD	=	0x00b0
+                           0000B0   417 _RXD0	=	0x00b0
+                           0000B1   418 _TXD	=	0x00b1
+                           0000B1   419 _TXD0	=	0x00b1
+                           0000B2   420 _INT0	=	0x00b2
+                           0000B3   421 _INT1	=	0x00b3
+                           0000B4   422 _T0	=	0x00b4
+                           0000B5   423 _T1	=	0x00b5
+                           0000B6   424 _WR	=	0x00b6
+                           0000B7   425 _RD	=	0x00b7
+                           0000D0   426 _P	=	0x00d0
+                           0000D1   427 _F1	=	0x00d1
+                           0000D2   428 _OV	=	0x00d2
+                           0000D3   429 _RS0	=	0x00d3
+                           0000D4   430 _RS1	=	0x00d4
+                           0000D5   431 _F0	=	0x00d5
+                           0000D6   432 _AC	=	0x00d6
+                           0000D7   433 _CY	=	0x00d7
+                           000098   434 _RI	=	0x0098
+                           000099   435 _TI	=	0x0099
+                           00009A   436 _RB8	=	0x009a
+                           00009B   437 _TB8	=	0x009b
+                           00009C   438 _REN	=	0x009c
+                           00009D   439 _SM2	=	0x009d
+                           00009E   440 _SM1	=	0x009e
+                           00009F   441 _SM0	=	0x009f
+                           000088   442 _IT0	=	0x0088
+                           000089   443 _IE0	=	0x0089
+                           00008A   444 _IT1	=	0x008a
+                           00008B   445 _IE1	=	0x008b
+                           00008C   446 _TR0	=	0x008c
+                           00008D   447 _TF0	=	0x008d
+                           00008E   448 _TR1	=	0x008e
+                           00008F   449 _TF1	=	0x008f
+                                    450 ;--------------------------------------------------------
+                                    451 ; overlayable register banks
+                                    452 ;--------------------------------------------------------
+                                    453 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        454 	.ds 8
+                                    455 ;--------------------------------------------------------
+                                    456 ; internal ram data
+                                    457 ;--------------------------------------------------------
+                                    458 	.area DSEG    (DATA)
+      000000                        459 _print_number_hex_sloc3_1_0:
+      000000                        460 	.ds 2
+      000002                        461 _print_number_hex_sloc4_1_0:
+      000002                        462 	.ds 4
+      000006                        463 _print_number_sloc0_1_0:
+      000006                        464 	.ds 2
+      000008                        465 _print_number_sloc1_1_0:
+      000008                        466 	.ds 4
+      00000C                        467 _us_delay_sloc0_1_0:
+      00000C                        468 	.ds 4
+      000010                        469 _us_delay_sloc1_1_0:
+      000010                        470 	.ds 4
+                                    471 ;--------------------------------------------------------
+                                    472 ; overlayable items in internal ram
+                                    473 ;--------------------------------------------------------
+                                    474 	.area	OSEG    (OVR,DATA)
+      000000                        475 _ms_delay_sloc0_1_0:
+      000000                        476 	.ds 4
+                                    477 ;--------------------------------------------------------
+                                    478 ; indirectly addressable internal ram data
+                                    479 ;--------------------------------------------------------
+                                    480 	.area ISEG    (DATA)
+                                    481 ;--------------------------------------------------------
+                                    482 ; absolute internal ram data
+                                    483 ;--------------------------------------------------------
+                                    484 	.area IABS    (ABS,DATA)
+                                    485 	.area IABS    (ABS,DATA)
+                                    486 ;--------------------------------------------------------
+                                    487 ; bit data
+                                    488 ;--------------------------------------------------------
+                                    489 	.area BSEG    (BIT)
+      000000                        490 _print_number_hex_sloc0_1_0:
+      000000                        491 	.ds 1
+      000001                        492 _print_number_hex_sloc1_1_0:
+      000001                        493 	.ds 1
+      000002                        494 _print_number_hex_sloc2_1_0:
+      000002                        495 	.ds 1
+                                    496 ;--------------------------------------------------------
+                                    497 ; paged external ram data
+                                    498 ;--------------------------------------------------------
+                                    499 	.area PSEG    (PAG,XDATA)
+                                    500 ;--------------------------------------------------------
+                                    501 ; external ram data
+                                    502 ;--------------------------------------------------------
+                                    503 	.area XSEG    (XDATA)
+      000000                        504 _putchar_ch_65536_12:
+      000000                        505 	.ds 2
+      000002                        506 _int_to_char_temp_65536_18:
+      000002                        507 	.ds 2
+      000004                        508 _char_to_int_temp_65536_21:
+      000004                        509 	.ds 1
+      000005                        510 _print_number_hex_PARM_2:
+      000005                        511 	.ds 1
+      000006                        512 _print_number_hex_number_65536_26:
+      000006                        513 	.ds 4
+      00000A                        514 _print_number_hex_temp_ascii_store_65536_27:
+      00000A                        515 	.ds 10
+      000014                        516 _print_number_hex_counter_65536_27:
+      000014                        517 	.ds 1
+      000015                        518 _my_printf_text_ptr_65536_40:
+      000015                        519 	.ds 2
+      000017                        520 _print_number_number_65536_43:
+      000017                        521 	.ds 4
+      00001B                        522 _print_number_temp_ascii_store_65536_44:
+      00001B                        523 	.ds 10
+      000025                        524 _print_number_counter_65536_44:
+      000025                        525 	.ds 1
+      000026                        526 _fetch_number_base_65536_49:
+      000026                        527 	.ds 1
+      000027                        528 _fetch_number_scanned_digit_65536_50:
+      000027                        529 	.ds 1
+      000028                        530 _fetch_number_digit_array_65536_50:
+      000028                        531 	.ds 20
+      00003C                        532 _fetch_number_digit_counter_65536_50:
+      00003C                        533 	.ds 1
+      00003D                        534 _fetch_number_number_65536_50:
+      00003D                        535 	.ds 2
+      00003F                        536 _ms_delay_time_65536_56:
+      00003F                        537 	.ds 4
+      000043                        538 _us_delay_time_65536_61:
+      000043                        539 	.ds 4
+                                    540 ;--------------------------------------------------------
+                                    541 ; absolute external ram data
+                                    542 ;--------------------------------------------------------
+                                    543 	.area XABS    (ABS,XDATA)
+                                    544 ;--------------------------------------------------------
+                                    545 ; external initialized ram data
+                                    546 ;--------------------------------------------------------
+                                    547 	.area XISEG   (XDATA)
+                                    548 	.area HOME    (CODE)
+                                    549 	.area GSINIT0 (CODE)
+                                    550 	.area GSINIT1 (CODE)
+                                    551 	.area GSINIT2 (CODE)
+                                    552 	.area GSINIT3 (CODE)
+                                    553 	.area GSINIT4 (CODE)
+                                    554 	.area GSINIT5 (CODE)
+                                    555 	.area GSINIT  (CODE)
+                                    556 	.area GSFINAL (CODE)
+                                    557 	.area CSEG    (CODE)
+                                    558 ;--------------------------------------------------------
+                                    559 ; global & static initialisations
+                                    560 ;--------------------------------------------------------
+                                    561 	.area HOME    (CODE)
+                                    562 	.area GSINIT  (CODE)
+                                    563 	.area GSFINAL (CODE)
+                                    564 	.area GSINIT  (CODE)
+                                    565 ;--------------------------------------------------------
+                                    566 ; Home
+                                    567 ;--------------------------------------------------------
+                                    568 	.area HOME    (CODE)
+                                    569 	.area HOME    (CODE)
+                                    570 ;--------------------------------------------------------
+                                    571 ; code
+                                    572 ;--------------------------------------------------------
+                                    573 	.area CSEG    (CODE)
+                                    574 ;------------------------------------------------------------
+                                    575 ;Allocation info for local variables in function 'putchar'
+                                    576 ;------------------------------------------------------------
+                                    577 ;ch                        Allocated with name '_putchar_ch_65536_12'
+                                    578 ;------------------------------------------------------------
+                                    579 ;	uart.c:7: int putchar (int ch)
+                                    580 ;	-----------------------------------------
+                                    581 ;	 function putchar
+                                    582 ;	-----------------------------------------
+      000000                        583 _putchar:
+                           000007   584 	ar7 = 0x07
+                           000006   585 	ar6 = 0x06
+                           000005   586 	ar5 = 0x05
+                           000004   587 	ar4 = 0x04
+                           000003   588 	ar3 = 0x03
+                           000002   589 	ar2 = 0x02
+                           000001   590 	ar1 = 0x01
+                           000000   591 	ar0 = 0x00
+      000000 AF 83            [24]  592 	mov	r7,dph
+      000002 E5 82            [12]  593 	mov	a,dpl
+      000004 90r00r00         [24]  594 	mov	dptr,#_putchar_ch_65536_12
+      000007 F0               [24]  595 	movx	@dptr,a
+      000008 EF               [12]  596 	mov	a,r7
+      000009 A3               [24]  597 	inc	dptr
+      00000A F0               [24]  598 	movx	@dptr,a
+                                    599 ;	uart.c:9: while (TI==0)
+      00000B                        600 00101$:
+      00000B 30 99 FD         [24]  601 	jnb	_TI,00101$
+                                    602 ;	uart.c:14: SBUF = ch;
+      00000E 90r00r00         [24]  603 	mov	dptr,#_putchar_ch_65536_12
+      000011 E0               [24]  604 	movx	a,@dptr
+      000012 FE               [12]  605 	mov	r6,a
+      000013 A3               [24]  606 	inc	dptr
+      000014 E0               [24]  607 	movx	a,@dptr
+      000015 FF               [12]  608 	mov	r7,a
+      000016 8E 99            [24]  609 	mov	_SBUF,r6
+                                    610 ;	uart.c:15: TI = 0;
+                                    611 ;	assignBit
+      000018 C2 99            [12]  612 	clr	_TI
+                                    613 ;	uart.c:17: return ch;
+      00001A 8E 82            [24]  614 	mov	dpl,r6
+      00001C 8F 83            [24]  615 	mov	dph,r7
+                                    616 ;	uart.c:18: }
+      00001E 22               [24]  617 	ret
+                                    618 ;------------------------------------------------------------
+                                    619 ;Allocation info for local variables in function 'getchar'
+                                    620 ;------------------------------------------------------------
+                                    621 ;	uart.c:20: int getchar (void)
+                                    622 ;	-----------------------------------------
+                                    623 ;	 function getchar
+                                    624 ;	-----------------------------------------
+      00001F                        625 _getchar:
+                                    626 ;	uart.c:22: while (RI==0)
+      00001F                        627 00101$:
+                                    628 ;	uart.c:27: RI = 0;
+                                    629 ;	assignBit
+      00001F 10 98 02         [24]  630 	jbc	_RI,00114$
+      000022 80 FB            [24]  631 	sjmp	00101$
+      000024                        632 00114$:
+                                    633 ;	uart.c:28: return SBUF;
+      000024 AE 99            [24]  634 	mov	r6,_SBUF
+      000026 7F 00            [12]  635 	mov	r7,#0x00
+      000028 8E 82            [24]  636 	mov	dpl,r6
+      00002A 8F 83            [24]  637 	mov	dph,r7
+                                    638 ;	uart.c:29: }
+      00002C 22               [24]  639 	ret
+                                    640 ;------------------------------------------------------------
+                                    641 ;Allocation info for local variables in function 'int_to_char'
+                                    642 ;------------------------------------------------------------
+                                    643 ;temp                      Allocated with name '_int_to_char_temp_65536_18'
+                                    644 ;------------------------------------------------------------
+                                    645 ;	uart.c:31: int8_t int_to_char(int temp)           /*Function that includes switch statement for hex definition*/
+                                    646 ;	-----------------------------------------
+                                    647 ;	 function int_to_char
+                                    648 ;	-----------------------------------------
+      00002D                        649 _int_to_char:
+      00002D AF 83            [24]  650 	mov	r7,dph
+      00002F E5 82            [12]  651 	mov	a,dpl
+      000031 90r00r02         [24]  652 	mov	dptr,#_int_to_char_temp_65536_18
+      000034 F0               [24]  653 	movx	@dptr,a
+      000035 EF               [12]  654 	mov	a,r7
+      000036 A3               [24]  655 	inc	dptr
+      000037 F0               [24]  656 	movx	@dptr,a
+                                    657 ;	uart.c:33: switch(temp)            /*switch case for defining hex characters above 9 i.e. 'A' to 'F'*/
+      000038 90r00r02         [24]  658 	mov	dptr,#_int_to_char_temp_65536_18
+      00003B E0               [24]  659 	movx	a,@dptr
+      00003C FE               [12]  660 	mov	r6,a
+      00003D A3               [24]  661 	inc	dptr
+      00003E E0               [24]  662 	movx	a,@dptr
+      00003F FF               [12]  663 	mov	r7,a
+      000040 30 E7 03         [24]  664 	jnb	acc.7,00128$
+      000043 02r00rC6         [24]  665 	ljmp	00117$
+      000046                        666 00128$:
+      000046 C3               [12]  667 	clr	c
+      000047 74 0F            [12]  668 	mov	a,#0x0f
+      000049 9E               [12]  669 	subb	a,r6
+      00004A 74 80            [12]  670 	mov	a,#(0x00 ^ 0x80)
+      00004C 8F F0            [24]  671 	mov	b,r7
+      00004E 63 F0 80         [24]  672 	xrl	b,#0x80
+      000051 95 F0            [12]  673 	subb	a,b
+      000053 50 03            [24]  674 	jnc	00129$
+      000055 02r00rC6         [24]  675 	ljmp	00117$
+      000058                        676 00129$:
+      000058 EE               [12]  677 	mov	a,r6
+      000059 24 0A            [12]  678 	add	a,#(00130$-3-.)
+      00005B 83               [24]  679 	movc	a,@a+pc
+      00005C F5 82            [12]  680 	mov	dpl,a
+      00005E EE               [12]  681 	mov	a,r6
+      00005F 24 14            [12]  682 	add	a,#(00131$-3-.)
+      000061 83               [24]  683 	movc	a,@a+pc
+      000062 F5 83            [12]  684 	mov	dph,a
+      000064 E4               [12]  685 	clr	a
+      000065 73               [24]  686 	jmp	@a+dptr
+      000066                        687 00130$:
+      000066r8A                     688 	.db	00102$
+      000067r86                     689 	.db	00101$
+      000068r8E                     690 	.db	00103$
+      000069r92                     691 	.db	00104$
+      00006Ar96                     692 	.db	00105$
+      00006Br9A                     693 	.db	00106$
+      00006Cr9E                     694 	.db	00107$
+      00006DrA2                     695 	.db	00108$
+      00006ErA6                     696 	.db	00109$
+      00006FrAA                     697 	.db	00110$
+      000070rAE                     698 	.db	00111$
+      000071rB2                     699 	.db	00112$
+      000072rB6                     700 	.db	00113$
+      000073rBA                     701 	.db	00114$
+      000074rBE                     702 	.db	00115$
+      000075rC2                     703 	.db	00116$
+      000076                        704 00131$:
+      000076s00                     705 	.db	00102$>>8
+      000077s00                     706 	.db	00101$>>8
+      000078s00                     707 	.db	00103$>>8
+      000079s00                     708 	.db	00104$>>8
+      00007As00                     709 	.db	00105$>>8
+      00007Bs00                     710 	.db	00106$>>8
+      00007Cs00                     711 	.db	00107$>>8
+      00007Ds00                     712 	.db	00108$>>8
+      00007Es00                     713 	.db	00109$>>8
+      00007Fs00                     714 	.db	00110$>>8
+      000080s00                     715 	.db	00111$>>8
+      000081s00                     716 	.db	00112$>>8
+      000082s00                     717 	.db	00113$>>8
+      000083s00                     718 	.db	00114$>>8
+      000084s00                     719 	.db	00115$>>8
+      000085s00                     720 	.db	00116$>>8
+                                    721 ;	uart.c:34: {		case 1:
+      000086                        722 00101$:
+                                    723 ;	uart.c:35: return '1';
+      000086 75 82 31         [24]  724 	mov	dpl,#0x31
+                                    725 ;	uart.c:37: case 0:
+      000089 22               [24]  726 	ret
+      00008A                        727 00102$:
+                                    728 ;	uart.c:38: return '0';
+      00008A 75 82 30         [24]  729 	mov	dpl,#0x30
+                                    730 ;	uart.c:40: case 2:
+      00008D 22               [24]  731 	ret
+      00008E                        732 00103$:
+                                    733 ;	uart.c:41: return '2';
+      00008E 75 82 32         [24]  734 	mov	dpl,#0x32
+                                    735 ;	uart.c:43: case 3:
+      000091 22               [24]  736 	ret
+      000092                        737 00104$:
+                                    738 ;	uart.c:44: return '3';
+      000092 75 82 33         [24]  739 	mov	dpl,#0x33
+                                    740 ;	uart.c:46: case 4:
+      000095 22               [24]  741 	ret
+      000096                        742 00105$:
+                                    743 ;	uart.c:47: return '4';
+      000096 75 82 34         [24]  744 	mov	dpl,#0x34
+                                    745 ;	uart.c:49: case 5:
+      000099 22               [24]  746 	ret
+      00009A                        747 00106$:
+                                    748 ;	uart.c:50: return '5';
+      00009A 75 82 35         [24]  749 	mov	dpl,#0x35
+                                    750 ;	uart.c:52: case 6:
+      00009D 22               [24]  751 	ret
+      00009E                        752 00107$:
+                                    753 ;	uart.c:53: return '6';
+      00009E 75 82 36         [24]  754 	mov	dpl,#0x36
+                                    755 ;	uart.c:55: case 7:
+      0000A1 22               [24]  756 	ret
+      0000A2                        757 00108$:
+                                    758 ;	uart.c:56: return '7';
+      0000A2 75 82 37         [24]  759 	mov	dpl,#0x37
+                                    760 ;	uart.c:58: case 8:
+      0000A5 22               [24]  761 	ret
+      0000A6                        762 00109$:
+                                    763 ;	uart.c:59: return '8';
+      0000A6 75 82 38         [24]  764 	mov	dpl,#0x38
+                                    765 ;	uart.c:61: case 9:
+      0000A9 22               [24]  766 	ret
+      0000AA                        767 00110$:
+                                    768 ;	uart.c:62: return '9';
+      0000AA 75 82 39         [24]  769 	mov	dpl,#0x39
+                                    770 ;	uart.c:64: case 10:
+      0000AD 22               [24]  771 	ret
+      0000AE                        772 00111$:
+                                    773 ;	uart.c:65: return 'A';
+      0000AE 75 82 41         [24]  774 	mov	dpl,#0x41
+                                    775 ;	uart.c:67: case 11:
+      0000B1 22               [24]  776 	ret
+      0000B2                        777 00112$:
+                                    778 ;	uart.c:69: return 'B';
+      0000B2 75 82 42         [24]  779 	mov	dpl,#0x42
+                                    780 ;	uart.c:71: case 12:
+      0000B5 22               [24]  781 	ret
+      0000B6                        782 00113$:
+                                    783 ;	uart.c:72: return 'C';
+      0000B6 75 82 43         [24]  784 	mov	dpl,#0x43
+                                    785 ;	uart.c:74: case 13:
+      0000B9 22               [24]  786 	ret
+      0000BA                        787 00114$:
+                                    788 ;	uart.c:75: return 'D';
+      0000BA 75 82 44         [24]  789 	mov	dpl,#0x44
+                                    790 ;	uart.c:77: case 14:
+      0000BD 22               [24]  791 	ret
+      0000BE                        792 00115$:
+                                    793 ;	uart.c:78: return 'E';
+      0000BE 75 82 45         [24]  794 	mov	dpl,#0x45
+                                    795 ;	uart.c:80: case 15:
+      0000C1 22               [24]  796 	ret
+      0000C2                        797 00116$:
+                                    798 ;	uart.c:81: return 'F';
+      0000C2 75 82 46         [24]  799 	mov	dpl,#0x46
+                                    800 ;	uart.c:83: }
+      0000C5 22               [24]  801 	ret
+      0000C6                        802 00117$:
+                                    803 ;	uart.c:84: return '0';
+      0000C6 75 82 30         [24]  804 	mov	dpl,#0x30
+                                    805 ;	uart.c:85: }
+      0000C9 22               [24]  806 	ret
+                                    807 ;------------------------------------------------------------
+                                    808 ;Allocation info for local variables in function 'char_to_int'
+                                    809 ;------------------------------------------------------------
+                                    810 ;temp                      Allocated with name '_char_to_int_temp_65536_21'
+                                    811 ;------------------------------------------------------------
+                                    812 ;	uart.c:87: uint8_t char_to_int(uint8_t temp)
+                                    813 ;	-----------------------------------------
+                                    814 ;	 function char_to_int
+                                    815 ;	-----------------------------------------
+      0000CA                        816 _char_to_int:
+      0000CA E5 82            [12]  817 	mov	a,dpl
+      0000CC 90r00r04         [24]  818 	mov	dptr,#_char_to_int_temp_65536_21
+      0000CF F0               [24]  819 	movx	@dptr,a
+                                    820 ;	uart.c:89: if((temp>='0')&&(temp<='9'))
+      0000D0 E0               [24]  821 	movx	a,@dptr
+      0000D1 FF               [12]  822 	mov	r7,a
+      0000D2 BF 30 00         [24]  823 	cjne	r7,#0x30,00138$
+      0000D5                        824 00138$:
+      0000D5 40 0E            [24]  825 	jc	00109$
+      0000D7 EF               [12]  826 	mov	a,r7
+      0000D8 24 C6            [12]  827 	add	a,#0xff - 0x39
+      0000DA 40 09            [24]  828 	jc	00109$
+                                    829 ;	uart.c:91: temp-='0';
+      0000DC EF               [12]  830 	mov	a,r7
+      0000DD 24 D0            [12]  831 	add	a,#0xd0
+      0000DF 90r00r04         [24]  832 	mov	dptr,#_char_to_int_temp_65536_21
+      0000E2 F0               [24]  833 	movx	@dptr,a
+      0000E3 80 38            [24]  834 	sjmp	00110$
+      0000E5                        835 00109$:
+                                    836 ;	uart.c:93: else if((temp>='a')&&(temp<='f'))
+      0000E5 90r00r04         [24]  837 	mov	dptr,#_char_to_int_temp_65536_21
+      0000E8 E0               [24]  838 	movx	a,@dptr
+      0000E9 FF               [12]  839 	mov	r7,a
+      0000EA BF 61 00         [24]  840 	cjne	r7,#0x61,00141$
+      0000ED                        841 00141$:
+      0000ED 40 13            [24]  842 	jc	00105$
+      0000EF EF               [12]  843 	mov	a,r7
+      0000F0 24 99            [12]  844 	add	a,#0xff - 0x66
+      0000F2 40 0E            [24]  845 	jc	00105$
+                                    846 ;	uart.c:95: temp-='a';
+      0000F4 EF               [12]  847 	mov	a,r7
+      0000F5 24 9F            [12]  848 	add	a,#0x9f
+      0000F7 90r00r04         [24]  849 	mov	dptr,#_char_to_int_temp_65536_21
+      0000FA F0               [24]  850 	movx	@dptr,a
+                                    851 ;	uart.c:96: temp+=10;
+      0000FB E0               [24]  852 	movx	a,@dptr
+      0000FC FF               [12]  853 	mov	r7,a
+      0000FD 24 0A            [12]  854 	add	a,#0x0a
+      0000FF F0               [24]  855 	movx	@dptr,a
+      000100 80 1B            [24]  856 	sjmp	00110$
+      000102                        857 00105$:
+                                    858 ;	uart.c:98: else if((temp>='A')&&(temp<='f'))
+      000102 90r00r04         [24]  859 	mov	dptr,#_char_to_int_temp_65536_21
+      000105 E0               [24]  860 	movx	a,@dptr
+      000106 FF               [12]  861 	mov	r7,a
+      000107 BF 41 00         [24]  862 	cjne	r7,#0x41,00144$
+      00010A                        863 00144$:
+      00010A 40 11            [24]  864 	jc	00110$
+      00010C EF               [12]  865 	mov	a,r7
+      00010D 24 99            [12]  866 	add	a,#0xff - 0x66
+      00010F 40 0C            [24]  867 	jc	00110$
+                                    868 ;	uart.c:100: temp-='A';
+      000111 EF               [12]  869 	mov	a,r7
+      000112 24 BF            [12]  870 	add	a,#0xbf
+      000114 90r00r04         [24]  871 	mov	dptr,#_char_to_int_temp_65536_21
+      000117 F0               [24]  872 	movx	@dptr,a
+                                    873 ;	uart.c:101: temp+=10;
+      000118 E0               [24]  874 	movx	a,@dptr
+      000119 FF               [12]  875 	mov	r7,a
+      00011A 24 0A            [12]  876 	add	a,#0x0a
+      00011C F0               [24]  877 	movx	@dptr,a
+      00011D                        878 00110$:
+                                    879 ;	uart.c:103: return temp;
+      00011D 90r00r04         [24]  880 	mov	dptr,#_char_to_int_temp_65536_21
+      000120 E0               [24]  881 	movx	a,@dptr
+                                    882 ;	uart.c:104: }
+      000121 F5 82            [12]  883 	mov	dpl,a
+      000123 22               [24]  884 	ret
+                                    885 ;------------------------------------------------------------
+                                    886 ;Allocation info for local variables in function 'print_number_hex'
+                                    887 ;------------------------------------------------------------
+                                    888 ;sloc3                     Allocated with name '_print_number_hex_sloc3_1_0'
+                                    889 ;sloc4                     Allocated with name '_print_number_hex_sloc4_1_0'
+                                    890 ;display_width             Allocated with name '_print_number_hex_PARM_2'
+                                    891 ;number                    Allocated with name '_print_number_hex_number_65536_26'
+                                    892 ;temp_ascii_store          Allocated with name '_print_number_hex_temp_ascii_store_65536_27'
+                                    893 ;temp_value                Allocated with name '_print_number_hex_temp_value_65536_27'
+                                    894 ;counter                   Allocated with name '_print_number_hex_counter_65536_27'
+                                    895 ;value_check               Allocated with name '_print_number_hex_value_check_65536_27'
+                                    896 ;------------------------------------------------------------
+                                    897 ;	uart.c:106: void print_number_hex(__xdata uint32_t number,__xdata uint8_t display_width)
+                                    898 ;	-----------------------------------------
+                                    899 ;	 function print_number_hex
+                                    900 ;	-----------------------------------------
+      000124                        901 _print_number_hex:
+      000124 AF 82            [24]  902 	mov	r7,dpl
+      000126 AE 83            [24]  903 	mov	r6,dph
+      000128 AD F0            [24]  904 	mov	r5,b
+      00012A FC               [12]  905 	mov	r4,a
+      00012B 90r00r06         [24]  906 	mov	dptr,#_print_number_hex_number_65536_26
+      00012E EF               [12]  907 	mov	a,r7
+      00012F F0               [24]  908 	movx	@dptr,a
+      000130 EE               [12]  909 	mov	a,r6
+      000131 A3               [24]  910 	inc	dptr
+      000132 F0               [24]  911 	movx	@dptr,a
+      000133 ED               [12]  912 	mov	a,r5
+      000134 A3               [24]  913 	inc	dptr
+      000135 F0               [24]  914 	movx	@dptr,a
+      000136 EC               [12]  915 	mov	a,r4
+      000137 A3               [24]  916 	inc	dptr
+      000138 F0               [24]  917 	movx	@dptr,a
+                                    918 ;	uart.c:111: for(counter=display_width;counter>1;counter--)
+      000139 90r00r05         [24]  919 	mov	dptr,#_print_number_hex_PARM_2
+      00013C E0               [24]  920 	movx	a,@dptr
+      00013D FF               [12]  921 	mov	r7,a
+      00013E 90r00r06         [24]  922 	mov	dptr,#_print_number_hex_number_65536_26
+      000141 E0               [24]  923 	movx	a,@dptr
+      000142 FB               [12]  924 	mov	r3,a
+      000143 A3               [24]  925 	inc	dptr
+      000144 E0               [24]  926 	movx	a,@dptr
+      000145 FC               [12]  927 	mov	r4,a
+      000146 A3               [24]  928 	inc	dptr
+      000147 E0               [24]  929 	movx	a,@dptr
+      000148 FD               [12]  930 	mov	r5,a
+      000149 A3               [24]  931 	inc	dptr
+      00014A E0               [24]  932 	movx	a,@dptr
+      00014B FE               [12]  933 	mov	r6,a
+      00014C C3               [12]  934 	clr	c
+      00014D 74 0F            [12]  935 	mov	a,#0x0f
+      00014F 9B               [12]  936 	subb	a,r3
+      000150 E4               [12]  937 	clr	a
+      000151 9C               [12]  938 	subb	a,r4
+      000152 E4               [12]  939 	clr	a
+      000153 9D               [12]  940 	subb	a,r5
+      000154 E4               [12]  941 	clr	a
+      000155 9E               [12]  942 	subb	a,r6
+      000156 92*00            [24]  943 	mov	_print_number_hex_sloc0_1_0,c
+      000158 C3               [12]  944 	clr	c
+      000159 74 FF            [12]  945 	mov	a,#0xff
+      00015B 9B               [12]  946 	subb	a,r3
+      00015C E4               [12]  947 	clr	a
+      00015D 9C               [12]  948 	subb	a,r4
+      00015E E4               [12]  949 	clr	a
+      00015F 9D               [12]  950 	subb	a,r5
+      000160 E4               [12]  951 	clr	a
+      000161 9E               [12]  952 	subb	a,r6
+      000162 92*01            [24]  953 	mov	_print_number_hex_sloc1_1_0,c
+      000164 C3               [12]  954 	clr	c
+      000165 74 FF            [12]  955 	mov	a,#0xff
+      000167 9B               [12]  956 	subb	a,r3
+      000168 74 0F            [12]  957 	mov	a,#0x0f
+      00016A 9C               [12]  958 	subb	a,r4
+      00016B E4               [12]  959 	clr	a
+      00016C 9D               [12]  960 	subb	a,r5
+      00016D E4               [12]  961 	clr	a
+      00016E 9E               [12]  962 	subb	a,r6
+      00016F 92*02            [24]  963 	mov	_print_number_hex_sloc2_1_0,c
+      000171                        964 00117$:
+      000171 C3               [12]  965 	clr	c
+      000172 74 81            [12]  966 	mov	a,#(0x01 ^ 0x80)
+      000174 8F F0            [24]  967 	mov	b,r7
+      000176 63 F0 80         [24]  968 	xrl	b,#0x80
+      000179 95 F0            [12]  969 	subb	a,b
+      00017B 50 3B            [24]  970 	jnc	00132$
+                                    971 ;	uart.c:113: switch(counter)
+      00017D BF 02 02         [24]  972 	cjne	r7,#0x02,00176$
+      000180 80 26            [24]  973 	sjmp	00107$
+      000182                        974 00176$:
+      000182 BF 03 02         [24]  975 	cjne	r7,#0x03,00177$
+      000185 80 12            [24]  976 	sjmp	00104$
+      000187                        977 00177$:
+      000187 BF 04 2B         [24]  978 	cjne	r7,#0x04,00118$
+                                    979 ;	uart.c:118: if(number<=value_check)
+      00018A 20*02 28         [24]  980 	jb	_print_number_hex_sloc2_1_0,00118$
+                                    981 ;	uart.c:120: putchar('0');
+      00018D 90 00 30         [24]  982 	mov	dptr,#0x0030
+      000190 C0 07            [24]  983 	push	ar7
+      000192 12r00r00         [24]  984 	lcall	_putchar
+      000195 D0 07            [24]  985 	pop	ar7
+                                    986 ;	uart.c:122: break;
+                                    987 ;	uart.c:125: case 3:
+      000197 80 1C            [24]  988 	sjmp	00118$
+      000199                        989 00104$:
+                                    990 ;	uart.c:128: if(number<=value_check)
+      000199 20*01 19         [24]  991 	jb	_print_number_hex_sloc1_1_0,00118$
+                                    992 ;	uart.c:130: putchar('0');
+      00019C 90 00 30         [24]  993 	mov	dptr,#0x0030
+      00019F C0 07            [24]  994 	push	ar7
+      0001A1 12r00r00         [24]  995 	lcall	_putchar
+      0001A4 D0 07            [24]  996 	pop	ar7
+                                    997 ;	uart.c:132: break;
+                                    998 ;	uart.c:135: case 2:
+      0001A6 80 0D            [24]  999 	sjmp	00118$
+      0001A8                       1000 00107$:
+                                   1001 ;	uart.c:138: if(number<=value_check)
+      0001A8 20*00 0A         [24] 1002 	jb	_print_number_hex_sloc0_1_0,00118$
+                                   1003 ;	uart.c:140: putchar('0');
+      0001AB 90 00 30         [24] 1004 	mov	dptr,#0x0030
+      0001AE C0 07            [24] 1005 	push	ar7
+      0001B0 12r00r00         [24] 1006 	lcall	_putchar
+      0001B3 D0 07            [24] 1007 	pop	ar7
+                                   1008 ;	uart.c:144: }
+      0001B5                       1009 00118$:
+                                   1010 ;	uart.c:111: for(counter=display_width;counter>1;counter--)
+      0001B5 1F               [12] 1011 	dec	r7
+                                   1012 ;	uart.c:146: do
+      0001B6 80 B9            [24] 1013 	sjmp	00117$
+      0001B8                       1014 00132$:
+      0001B8                       1015 00112$:
+                                   1016 ;	uart.c:148: temp_ascii_store[counter]=int_to_char(number%16);
+      0001B8 EF               [12] 1017 	mov	a,r7
+      0001B9 FD               [12] 1018 	mov	r5,a
+      0001BA 33               [12] 1019 	rlc	a
+      0001BB 95 E0            [12] 1020 	subb	a,acc
+      0001BD FE               [12] 1021 	mov	r6,a
+      0001BE ED               [12] 1022 	mov	a,r5
+      0001BF 24r0A            [12] 1023 	add	a,#_print_number_hex_temp_ascii_store_65536_27
+      0001C1 F5*00            [12] 1024 	mov	_print_number_hex_sloc3_1_0,a
+      0001C3 EE               [12] 1025 	mov	a,r6
+      0001C4 34s00            [12] 1026 	addc	a,#(_print_number_hex_temp_ascii_store_65536_27 >> 8)
+      0001C6 F5*01            [12] 1027 	mov	(_print_number_hex_sloc3_1_0 + 1),a
+      0001C8 90r00r06         [24] 1028 	mov	dptr,#_print_number_hex_number_65536_26
+      0001CB E0               [24] 1029 	movx	a,@dptr
+      0001CC F5*02            [12] 1030 	mov	_print_number_hex_sloc4_1_0,a
+      0001CE A3               [24] 1031 	inc	dptr
+      0001CF E0               [24] 1032 	movx	a,@dptr
+      0001D0 F5*03            [12] 1033 	mov	(_print_number_hex_sloc4_1_0 + 1),a
+      0001D2 A3               [24] 1034 	inc	dptr
+      0001D3 E0               [24] 1035 	movx	a,@dptr
+      0001D4 F5*04            [12] 1036 	mov	(_print_number_hex_sloc4_1_0 + 2),a
+      0001D6 A3               [24] 1037 	inc	dptr
+      0001D7 E0               [24] 1038 	movx	a,@dptr
+      0001D8 F5*05            [12] 1039 	mov	(_print_number_hex_sloc4_1_0 + 3),a
+      0001DA 74 0F            [12] 1040 	mov	a,#0x0f
+      0001DC 55*02            [12] 1041 	anl	a,_print_number_hex_sloc4_1_0
+      0001DE F8               [12] 1042 	mov	r0,a
+      0001DF 7C 00            [12] 1043 	mov	r4,#0x00
+      0001E1 88 82            [24] 1044 	mov	dpl,r0
+      0001E3 8C 83            [24] 1045 	mov	dph,r4
+      0001E5 C0 07            [24] 1046 	push	ar7
+      0001E7 12r00r2D         [24] 1047 	lcall	_int_to_char
+      0001EA AE 82            [24] 1048 	mov	r6,dpl
+      0001EC D0 07            [24] 1049 	pop	ar7
+      0001EE 85*00 82         [24] 1050 	mov	dpl,_print_number_hex_sloc3_1_0
+      0001F1 85*01 83         [24] 1051 	mov	dph,(_print_number_hex_sloc3_1_0 + 1)
+      0001F4 EE               [12] 1052 	mov	a,r6
+      0001F5 F0               [24] 1053 	movx	@dptr,a
+                                   1054 ;	uart.c:149: number/=16;
+      0001F6 AB*02            [24] 1055 	mov	r3,_print_number_hex_sloc4_1_0
+      0001F8 E5*03            [12] 1056 	mov	a,(_print_number_hex_sloc4_1_0 + 1)
+      0001FA C4               [12] 1057 	swap	a
+      0001FB CB               [12] 1058 	xch	a,r3
+      0001FC C4               [12] 1059 	swap	a
+      0001FD 54 0F            [12] 1060 	anl	a,#0x0f
+      0001FF 6B               [12] 1061 	xrl	a,r3
+      000200 CB               [12] 1062 	xch	a,r3
+      000201 54 0F            [12] 1063 	anl	a,#0x0f
+      000203 CB               [12] 1064 	xch	a,r3
+      000204 6B               [12] 1065 	xrl	a,r3
+      000205 CB               [12] 1066 	xch	a,r3
+      000206 FC               [12] 1067 	mov	r4,a
+      000207 E5*04            [12] 1068 	mov	a,(_print_number_hex_sloc4_1_0 + 2)
+      000209 C4               [12] 1069 	swap	a
+      00020A 54 F0            [12] 1070 	anl	a,#0xf0
+      00020C 4C               [12] 1071 	orl	a,r4
+      00020D FC               [12] 1072 	mov	r4,a
+      00020E AD*04            [24] 1073 	mov	r5,(_print_number_hex_sloc4_1_0 + 2)
+      000210 E5*05            [12] 1074 	mov	a,(_print_number_hex_sloc4_1_0 + 3)
+      000212 C4               [12] 1075 	swap	a
+      000213 CD               [12] 1076 	xch	a,r5
+      000214 C4               [12] 1077 	swap	a
+      000215 54 0F            [12] 1078 	anl	a,#0x0f
+      000217 6D               [12] 1079 	xrl	a,r5
+      000218 CD               [12] 1080 	xch	a,r5
+      000219 54 0F            [12] 1081 	anl	a,#0x0f
+      00021B CD               [12] 1082 	xch	a,r5
+      00021C 6D               [12] 1083 	xrl	a,r5
+      00021D CD               [12] 1084 	xch	a,r5
+      00021E FE               [12] 1085 	mov	r6,a
+      00021F 90r00r06         [24] 1086 	mov	dptr,#_print_number_hex_number_65536_26
+      000222 EB               [12] 1087 	mov	a,r3
+      000223 F0               [24] 1088 	movx	@dptr,a
+      000224 EC               [12] 1089 	mov	a,r4
+      000225 A3               [24] 1090 	inc	dptr
+      000226 F0               [24] 1091 	movx	@dptr,a
+      000227 ED               [12] 1092 	mov	a,r5
+      000228 A3               [24] 1093 	inc	dptr
+      000229 F0               [24] 1094 	movx	@dptr,a
+      00022A EE               [12] 1095 	mov	a,r6
+      00022B A3               [24] 1096 	inc	dptr
+      00022C F0               [24] 1097 	movx	@dptr,a
+                                   1098 ;	uart.c:150: counter++;
+      00022D 0F               [12] 1099 	inc	r7
+                                   1100 ;	uart.c:151: }while(number>0);
+      00022E 90r00r06         [24] 1101 	mov	dptr,#_print_number_hex_number_65536_26
+      000231 E0               [24] 1102 	movx	a,@dptr
+      000232 F5 F0            [12] 1103 	mov	b,a
+      000234 A3               [24] 1104 	inc	dptr
+      000235 E0               [24] 1105 	movx	a,@dptr
+      000236 42 F0            [12] 1106 	orl	b,a
+      000238 A3               [24] 1107 	inc	dptr
+      000239 E0               [24] 1108 	movx	a,@dptr
+      00023A 42 F0            [12] 1109 	orl	b,a
+      00023C A3               [24] 1110 	inc	dptr
+      00023D E0               [24] 1111 	movx	a,@dptr
+      00023E 45 F0            [12] 1112 	orl	a,b
+      000240 60 03            [24] 1113 	jz	00183$
+      000242 02r01rB8         [24] 1114 	ljmp	00112$
+      000245                       1115 00183$:
+                                   1116 ;	uart.c:152: for(counter-=1;counter>=0;counter--)
+      000245 EF               [12] 1117 	mov	a,r7
+      000246 14               [12] 1118 	dec	a
+      000247 90r00r14         [24] 1119 	mov	dptr,#_print_number_hex_counter_65536_27
+      00024A F0               [24] 1120 	movx	@dptr,a
+      00024B E0               [24] 1121 	movx	a,@dptr
+      00024C FF               [12] 1122 	mov	r7,a
+      00024D                       1123 00120$:
+      00024D EF               [12] 1124 	mov	a,r7
+      00024E 20 E7 22         [24] 1125 	jb	acc.7,00115$
+                                   1126 ;	uart.c:154: putchar(temp_ascii_store[counter]);
+      000251 EF               [12] 1127 	mov	a,r7
+      000252 FD               [12] 1128 	mov	r5,a
+      000253 33               [12] 1129 	rlc	a
+      000254 95 E0            [12] 1130 	subb	a,acc
+      000256 FE               [12] 1131 	mov	r6,a
+      000257 ED               [12] 1132 	mov	a,r5
+      000258 24r0A            [12] 1133 	add	a,#_print_number_hex_temp_ascii_store_65536_27
+      00025A F5 82            [12] 1134 	mov	dpl,a
+      00025C EE               [12] 1135 	mov	a,r6
+      00025D 34s00            [12] 1136 	addc	a,#(_print_number_hex_temp_ascii_store_65536_27 >> 8)
+      00025F F5 83            [12] 1137 	mov	dph,a
+      000261 E0               [24] 1138 	movx	a,@dptr
+      000262 FE               [12] 1139 	mov	r6,a
+      000263 7D 00            [12] 1140 	mov	r5,#0x00
+      000265 8E 82            [24] 1141 	mov	dpl,r6
+      000267 8D 83            [24] 1142 	mov	dph,r5
+      000269 C0 07            [24] 1143 	push	ar7
+      00026B 12r00r00         [24] 1144 	lcall	_putchar
+      00026E D0 07            [24] 1145 	pop	ar7
+                                   1146 ;	uart.c:152: for(counter-=1;counter>=0;counter--)
+      000270 1F               [12] 1147 	dec	r7
+      000271 80 DA            [24] 1148 	sjmp	00120$
+      000273                       1149 00115$:
+                                   1150 ;	uart.c:156: return;
+                                   1151 ;	uart.c:157: }
+      000273 22               [24] 1152 	ret
+                                   1153 ;------------------------------------------------------------
+                                   1154 ;Allocation info for local variables in function 'my_printf'
+                                   1155 ;------------------------------------------------------------
+                                   1156 ;text_ptr                  Allocated with name '_my_printf_text_ptr_65536_40'
+                                   1157 ;------------------------------------------------------------
+                                   1158 ;	uart.c:160: void my_printf(__xdata uint8_t* text_ptr)
+                                   1159 ;	-----------------------------------------
+                                   1160 ;	 function my_printf
+                                   1161 ;	-----------------------------------------
+      000274                       1162 _my_printf:
+      000274 AF 83            [24] 1163 	mov	r7,dph
+      000276 E5 82            [12] 1164 	mov	a,dpl
+      000278 90r00r15         [24] 1165 	mov	dptr,#_my_printf_text_ptr_65536_40
+      00027B F0               [24] 1166 	movx	@dptr,a
+      00027C EF               [12] 1167 	mov	a,r7
+      00027D A3               [24] 1168 	inc	dptr
+      00027E F0               [24] 1169 	movx	@dptr,a
+                                   1170 ;	uart.c:162: while(*text_ptr!='\0')
+      00027F 90r00r15         [24] 1171 	mov	dptr,#_my_printf_text_ptr_65536_40
+      000282 E0               [24] 1172 	movx	a,@dptr
+      000283 FE               [12] 1173 	mov	r6,a
+      000284 A3               [24] 1174 	inc	dptr
+      000285 E0               [24] 1175 	movx	a,@dptr
+      000286 FF               [12] 1176 	mov	r7,a
+      000287                       1177 00101$:
+      000287 8E 82            [24] 1178 	mov	dpl,r6
+      000289 8F 83            [24] 1179 	mov	dph,r7
+      00028B E0               [24] 1180 	movx	a,@dptr
+      00028C FD               [12] 1181 	mov	r5,a
+      00028D 60 20            [24] 1182 	jz	00108$
+                                   1183 ;	uart.c:164: putchar(*text_ptr);
+      00028F 7C 00            [12] 1184 	mov	r4,#0x00
+      000291 8D 82            [24] 1185 	mov	dpl,r5
+      000293 8C 83            [24] 1186 	mov	dph,r4
+      000295 C0 07            [24] 1187 	push	ar7
+      000297 C0 06            [24] 1188 	push	ar6
+      000299 12r00r00         [24] 1189 	lcall	_putchar
+      00029C D0 06            [24] 1190 	pop	ar6
+      00029E D0 07            [24] 1191 	pop	ar7
+                                   1192 ;	uart.c:165: text_ptr++;
+      0002A0 0E               [12] 1193 	inc	r6
+      0002A1 BE 00 01         [24] 1194 	cjne	r6,#0x00,00116$
+      0002A4 0F               [12] 1195 	inc	r7
+      0002A5                       1196 00116$:
+      0002A5 90r00r15         [24] 1197 	mov	dptr,#_my_printf_text_ptr_65536_40
+      0002A8 EE               [12] 1198 	mov	a,r6
+      0002A9 F0               [24] 1199 	movx	@dptr,a
+      0002AA EF               [12] 1200 	mov	a,r7
+      0002AB A3               [24] 1201 	inc	dptr
+      0002AC F0               [24] 1202 	movx	@dptr,a
+      0002AD 80 D8            [24] 1203 	sjmp	00101$
+      0002AF                       1204 00108$:
+      0002AF 90r00r15         [24] 1205 	mov	dptr,#_my_printf_text_ptr_65536_40
+      0002B2 EE               [12] 1206 	mov	a,r6
+      0002B3 F0               [24] 1207 	movx	@dptr,a
+      0002B4 EF               [12] 1208 	mov	a,r7
+      0002B5 A3               [24] 1209 	inc	dptr
+      0002B6 F0               [24] 1210 	movx	@dptr,a
+                                   1211 ;	uart.c:167: return;
+                                   1212 ;	uart.c:168: }
+      0002B7 22               [24] 1213 	ret
+                                   1214 ;------------------------------------------------------------
+                                   1215 ;Allocation info for local variables in function 'print_number'
+                                   1216 ;------------------------------------------------------------
+                                   1217 ;sloc0                     Allocated with name '_print_number_sloc0_1_0'
+                                   1218 ;sloc1                     Allocated with name '_print_number_sloc1_1_0'
+                                   1219 ;number                    Allocated with name '_print_number_number_65536_43'
+                                   1220 ;temp_ascii_store          Allocated with name '_print_number_temp_ascii_store_65536_44'
+                                   1221 ;counter                   Allocated with name '_print_number_counter_65536_44'
+                                   1222 ;------------------------------------------------------------
+                                   1223 ;	uart.c:170: void print_number(__xdata int32_t number)
+                                   1224 ;	-----------------------------------------
+                                   1225 ;	 function print_number
+                                   1226 ;	-----------------------------------------
+      0002B8                       1227 _print_number:
+      0002B8 AF 82            [24] 1228 	mov	r7,dpl
+      0002BA AE 83            [24] 1229 	mov	r6,dph
+      0002BC AD F0            [24] 1230 	mov	r5,b
+      0002BE FC               [12] 1231 	mov	r4,a
+      0002BF 90r00r17         [24] 1232 	mov	dptr,#_print_number_number_65536_43
+      0002C2 EF               [12] 1233 	mov	a,r7
+      0002C3 F0               [24] 1234 	movx	@dptr,a
+      0002C4 EE               [12] 1235 	mov	a,r6
+      0002C5 A3               [24] 1236 	inc	dptr
+      0002C6 F0               [24] 1237 	movx	@dptr,a
+      0002C7 ED               [12] 1238 	mov	a,r5
+      0002C8 A3               [24] 1239 	inc	dptr
+      0002C9 F0               [24] 1240 	movx	@dptr,a
+      0002CA EC               [12] 1241 	mov	a,r4
+      0002CB A3               [24] 1242 	inc	dptr
+      0002CC F0               [24] 1243 	movx	@dptr,a
+                                   1244 ;	uart.c:174: if(number<0)
+      0002CD 90r00r17         [24] 1245 	mov	dptr,#_print_number_number_65536_43
+      0002D0 E0               [24] 1246 	movx	a,@dptr
+      0002D1 FC               [12] 1247 	mov	r4,a
+      0002D2 A3               [24] 1248 	inc	dptr
+      0002D3 E0               [24] 1249 	movx	a,@dptr
+      0002D4 FD               [12] 1250 	mov	r5,a
+      0002D5 A3               [24] 1251 	inc	dptr
+      0002D6 E0               [24] 1252 	movx	a,@dptr
+      0002D7 FE               [12] 1253 	mov	r6,a
+      0002D8 A3               [24] 1254 	inc	dptr
+      0002D9 E0               [24] 1255 	movx	a,@dptr
+      0002DA FF               [12] 1256 	mov	r7,a
+      0002DB 30 E7 29         [24] 1257 	jnb	acc.7,00113$
+                                   1258 ;	uart.c:176: putchar('-');
+      0002DE 90 00 2D         [24] 1259 	mov	dptr,#0x002d
+      0002E1 C0 07            [24] 1260 	push	ar7
+      0002E3 C0 06            [24] 1261 	push	ar6
+      0002E5 C0 05            [24] 1262 	push	ar5
+      0002E7 C0 04            [24] 1263 	push	ar4
+      0002E9 12r00r00         [24] 1264 	lcall	_putchar
+      0002EC D0 04            [24] 1265 	pop	ar4
+      0002EE D0 05            [24] 1266 	pop	ar5
+      0002F0 D0 06            [24] 1267 	pop	ar6
+      0002F2 D0 07            [24] 1268 	pop	ar7
+                                   1269 ;	uart.c:177: number *= -1;
+      0002F4 90r00r17         [24] 1270 	mov	dptr,#_print_number_number_65536_43
+      0002F7 C3               [12] 1271 	clr	c
+      0002F8 E4               [12] 1272 	clr	a
+      0002F9 9C               [12] 1273 	subb	a,r4
+      0002FA F0               [24] 1274 	movx	@dptr,a
+      0002FB E4               [12] 1275 	clr	a
+      0002FC 9D               [12] 1276 	subb	a,r5
+      0002FD A3               [24] 1277 	inc	dptr
+      0002FE F0               [24] 1278 	movx	@dptr,a
+      0002FF E4               [12] 1279 	clr	a
+      000300 9E               [12] 1280 	subb	a,r6
+      000301 A3               [24] 1281 	inc	dptr
+      000302 F0               [24] 1282 	movx	@dptr,a
+      000303 E4               [12] 1283 	clr	a
+      000304 9F               [12] 1284 	subb	a,r7
+      000305 A3               [24] 1285 	inc	dptr
+      000306 F0               [24] 1286 	movx	@dptr,a
+                                   1287 ;	uart.c:179: do
+      000307                       1288 00113$:
+      000307 7F 00            [12] 1289 	mov	r7,#0x00
+      000309                       1290 00103$:
+                                   1291 ;	uart.c:181: temp_ascii_store[counter]='0'+number%10;
+      000309 EF               [12] 1292 	mov	a,r7
+      00030A FD               [12] 1293 	mov	r5,a
+      00030B 33               [12] 1294 	rlc	a
+      00030C 95 E0            [12] 1295 	subb	a,acc
+      00030E FE               [12] 1296 	mov	r6,a
+      00030F ED               [12] 1297 	mov	a,r5
+      000310 24r1B            [12] 1298 	add	a,#_print_number_temp_ascii_store_65536_44
+      000312 F5*06            [12] 1299 	mov	_print_number_sloc0_1_0,a
+      000314 EE               [12] 1300 	mov	a,r6
+      000315 34s00            [12] 1301 	addc	a,#(_print_number_temp_ascii_store_65536_44 >> 8)
+      000317 F5*07            [12] 1302 	mov	(_print_number_sloc0_1_0 + 1),a
+      000319 90r00r17         [24] 1303 	mov	dptr,#_print_number_number_65536_43
+      00031C E0               [24] 1304 	movx	a,@dptr
+      00031D F5*08            [12] 1305 	mov	_print_number_sloc1_1_0,a
+      00031F A3               [24] 1306 	inc	dptr
+      000320 E0               [24] 1307 	movx	a,@dptr
+      000321 F5*09            [12] 1308 	mov	(_print_number_sloc1_1_0 + 1),a
+      000323 A3               [24] 1309 	inc	dptr
+      000324 E0               [24] 1310 	movx	a,@dptr
+      000325 F5*0A            [12] 1311 	mov	(_print_number_sloc1_1_0 + 2),a
+      000327 A3               [24] 1312 	inc	dptr
+      000328 E0               [24] 1313 	movx	a,@dptr
+      000329 F5*0B            [12] 1314 	mov	(_print_number_sloc1_1_0 + 3),a
+      00032B 90r00r00         [24] 1315 	mov	dptr,#__modslong_PARM_2
+      00032E 74 0A            [12] 1316 	mov	a,#0x0a
+      000330 F0               [24] 1317 	movx	@dptr,a
+      000331 E4               [12] 1318 	clr	a
+      000332 A3               [24] 1319 	inc	dptr
+      000333 F0               [24] 1320 	movx	@dptr,a
+      000334 A3               [24] 1321 	inc	dptr
+      000335 F0               [24] 1322 	movx	@dptr,a
+      000336 A3               [24] 1323 	inc	dptr
+      000337 F0               [24] 1324 	movx	@dptr,a
+      000338 85*08 82         [24] 1325 	mov	dpl,_print_number_sloc1_1_0
+      00033B 85*09 83         [24] 1326 	mov	dph,(_print_number_sloc1_1_0 + 1)
+      00033E 85*0A F0         [24] 1327 	mov	b,(_print_number_sloc1_1_0 + 2)
+      000341 E5*0B            [12] 1328 	mov	a,(_print_number_sloc1_1_0 + 3)
+      000343 C0 07            [24] 1329 	push	ar7
+      000345 12r00r00         [24] 1330 	lcall	__modslong
+      000348 A8 82            [24] 1331 	mov	r0,dpl
+      00034A 74 30            [12] 1332 	mov	a,#0x30
+      00034C 28               [12] 1333 	add	a,r0
+      00034D 85*06 82         [24] 1334 	mov	dpl,_print_number_sloc0_1_0
+      000350 85*07 83         [24] 1335 	mov	dph,(_print_number_sloc0_1_0 + 1)
+      000353 F0               [24] 1336 	movx	@dptr,a
+                                   1337 ;	uart.c:182: number/=10;
+      000354 90r00r00         [24] 1338 	mov	dptr,#__divslong_PARM_2
+      000357 74 0A            [12] 1339 	mov	a,#0x0a
+      000359 F0               [24] 1340 	movx	@dptr,a
+      00035A E4               [12] 1341 	clr	a
+      00035B A3               [24] 1342 	inc	dptr
+      00035C F0               [24] 1343 	movx	@dptr,a
+      00035D A3               [24] 1344 	inc	dptr
+      00035E F0               [24] 1345 	movx	@dptr,a
+      00035F A3               [24] 1346 	inc	dptr
+      000360 F0               [24] 1347 	movx	@dptr,a
+      000361 85*08 82         [24] 1348 	mov	dpl,_print_number_sloc1_1_0
+      000364 85*09 83         [24] 1349 	mov	dph,(_print_number_sloc1_1_0 + 1)
+      000367 85*0A F0         [24] 1350 	mov	b,(_print_number_sloc1_1_0 + 2)
+      00036A E5*0B            [12] 1351 	mov	a,(_print_number_sloc1_1_0 + 3)
+      00036C 12r00r00         [24] 1352 	lcall	__divslong
+      00036F AB 82            [24] 1353 	mov	r3,dpl
+      000371 AC 83            [24] 1354 	mov	r4,dph
+      000373 AD F0            [24] 1355 	mov	r5,b
+      000375 FE               [12] 1356 	mov	r6,a
+      000376 D0 07            [24] 1357 	pop	ar7
+      000378 90r00r17         [24] 1358 	mov	dptr,#_print_number_number_65536_43
+      00037B EB               [12] 1359 	mov	a,r3
+      00037C F0               [24] 1360 	movx	@dptr,a
+      00037D EC               [12] 1361 	mov	a,r4
+      00037E A3               [24] 1362 	inc	dptr
+      00037F F0               [24] 1363 	movx	@dptr,a
+      000380 ED               [12] 1364 	mov	a,r5
+      000381 A3               [24] 1365 	inc	dptr
+      000382 F0               [24] 1366 	movx	@dptr,a
+      000383 EE               [12] 1367 	mov	a,r6
+      000384 A3               [24] 1368 	inc	dptr
+      000385 F0               [24] 1369 	movx	@dptr,a
+                                   1370 ;	uart.c:183: counter++;
+      000386 0F               [12] 1371 	inc	r7
+                                   1372 ;	uart.c:184: }while(number>0);
+      000387 90r00r17         [24] 1373 	mov	dptr,#_print_number_number_65536_43
+      00038A E0               [24] 1374 	movx	a,@dptr
+      00038B FB               [12] 1375 	mov	r3,a
+      00038C A3               [24] 1376 	inc	dptr
+      00038D E0               [24] 1377 	movx	a,@dptr
+      00038E FC               [12] 1378 	mov	r4,a
+      00038F A3               [24] 1379 	inc	dptr
+      000390 E0               [24] 1380 	movx	a,@dptr
+      000391 FD               [12] 1381 	mov	r5,a
+      000392 A3               [24] 1382 	inc	dptr
+      000393 E0               [24] 1383 	movx	a,@dptr
+      000394 FE               [12] 1384 	mov	r6,a
+      000395 C3               [12] 1385 	clr	c
+      000396 E4               [12] 1386 	clr	a
+      000397 9B               [12] 1387 	subb	a,r3
+      000398 E4               [12] 1388 	clr	a
+      000399 9C               [12] 1389 	subb	a,r4
+      00039A E4               [12] 1390 	clr	a
+      00039B 9D               [12] 1391 	subb	a,r5
+      00039C 74 80            [12] 1392 	mov	a,#(0x00 ^ 0x80)
+      00039E 8E F0            [24] 1393 	mov	b,r6
+      0003A0 63 F0 80         [24] 1394 	xrl	b,#0x80
+      0003A3 95 F0            [12] 1395 	subb	a,b
+      0003A5 50 03            [24] 1396 	jnc	00135$
+      0003A7 02r03r09         [24] 1397 	ljmp	00103$
+      0003AA                       1398 00135$:
+                                   1399 ;	uart.c:185: for(counter-=1;counter>=0;counter--)
+      0003AA EF               [12] 1400 	mov	a,r7
+      0003AB 14               [12] 1401 	dec	a
+      0003AC 90r00r25         [24] 1402 	mov	dptr,#_print_number_counter_65536_44
+      0003AF F0               [24] 1403 	movx	@dptr,a
+      0003B0 E0               [24] 1404 	movx	a,@dptr
+      0003B1 FF               [12] 1405 	mov	r7,a
+      0003B2                       1406 00108$:
+      0003B2 EF               [12] 1407 	mov	a,r7
+      0003B3 20 E7 22         [24] 1408 	jb	acc.7,00106$
+                                   1409 ;	uart.c:187: putchar(temp_ascii_store[counter]);
+      0003B6 EF               [12] 1410 	mov	a,r7
+      0003B7 FD               [12] 1411 	mov	r5,a
+      0003B8 33               [12] 1412 	rlc	a
+      0003B9 95 E0            [12] 1413 	subb	a,acc
+      0003BB FE               [12] 1414 	mov	r6,a
+      0003BC ED               [12] 1415 	mov	a,r5
+      0003BD 24r1B            [12] 1416 	add	a,#_print_number_temp_ascii_store_65536_44
+      0003BF F5 82            [12] 1417 	mov	dpl,a
+      0003C1 EE               [12] 1418 	mov	a,r6
+      0003C2 34s00            [12] 1419 	addc	a,#(_print_number_temp_ascii_store_65536_44 >> 8)
+      0003C4 F5 83            [12] 1420 	mov	dph,a
+      0003C6 E0               [24] 1421 	movx	a,@dptr
+      0003C7 FE               [12] 1422 	mov	r6,a
+      0003C8 7D 00            [12] 1423 	mov	r5,#0x00
+      0003CA 8E 82            [24] 1424 	mov	dpl,r6
+      0003CC 8D 83            [24] 1425 	mov	dph,r5
+      0003CE C0 07            [24] 1426 	push	ar7
+      0003D0 12r00r00         [24] 1427 	lcall	_putchar
+      0003D3 D0 07            [24] 1428 	pop	ar7
+                                   1429 ;	uart.c:185: for(counter-=1;counter>=0;counter--)
+      0003D5 1F               [12] 1430 	dec	r7
+      0003D6 80 DA            [24] 1431 	sjmp	00108$
+      0003D8                       1432 00106$:
+                                   1433 ;	uart.c:189: return;
+                                   1434 ;	uart.c:190: }
+      0003D8 22               [24] 1435 	ret
+                                   1436 ;------------------------------------------------------------
+                                   1437 ;Allocation info for local variables in function 'fetch_number'
+                                   1438 ;------------------------------------------------------------
+                                   1439 ;base                      Allocated with name '_fetch_number_base_65536_49'
+                                   1440 ;scanned_digit             Allocated with name '_fetch_number_scanned_digit_65536_50'
+                                   1441 ;digit_array               Allocated with name '_fetch_number_digit_array_65536_50'
+                                   1442 ;digit_counter             Allocated with name '_fetch_number_digit_counter_65536_50'
+                                   1443 ;i                         Allocated with name '_fetch_number_i_65536_50'
+                                   1444 ;number                    Allocated with name '_fetch_number_number_65536_50'
+                                   1445 ;------------------------------------------------------------
+                                   1446 ;	uart.c:193: uint16_t fetch_number(uint8_t base)
+                                   1447 ;	-----------------------------------------
+                                   1448 ;	 function fetch_number
+                                   1449 ;	-----------------------------------------
+      0003D9                       1450 _fetch_number:
+      0003D9 E5 82            [12] 1451 	mov	a,dpl
+      0003DB 90r00r26         [24] 1452 	mov	dptr,#_fetch_number_base_65536_49
+      0003DE F0               [24] 1453 	movx	@dptr,a
+                                   1454 ;	uart.c:195: __xdata uint8_t scanned_digit=0,digit_array[20],digit_counter=0,i=0;
+      0003DF 90r00r27         [24] 1455 	mov	dptr,#_fetch_number_scanned_digit_65536_50
+      0003E2 E4               [12] 1456 	clr	a
+      0003E3 F0               [24] 1457 	movx	@dptr,a
+      0003E4 90r00r3C         [24] 1458 	mov	dptr,#_fetch_number_digit_counter_65536_50
+      0003E7 F0               [24] 1459 	movx	@dptr,a
+                                   1460 ;	uart.c:196: __xdata uint16_t number=0;
+      0003E8 90r00r3D         [24] 1461 	mov	dptr,#_fetch_number_number_65536_50
+      0003EB F0               [24] 1462 	movx	@dptr,a
+      0003EC A3               [24] 1463 	inc	dptr
+      0003ED F0               [24] 1464 	movx	@dptr,a
+                                   1465 ;	uart.c:197: while(scanned_digit!=13)
+      0003EE                       1466 00111$:
+      0003EE 90r00r27         [24] 1467 	mov	dptr,#_fetch_number_scanned_digit_65536_50
+      0003F1 E0               [24] 1468 	movx	a,@dptr
+      0003F2 FF               [12] 1469 	mov	r7,a
+      0003F3 BF 0D 03         [24] 1470 	cjne	r7,#0x0d,00153$
+      0003F6 02r04r82         [24] 1471 	ljmp	00127$
+      0003F9                       1472 00153$:
+                                   1473 ;	uart.c:199: scanned_digit=getchar();
+      0003F9 12r00r1F         [24] 1474 	lcall	_getchar
+      0003FC AE 82            [24] 1475 	mov	r6,dpl
+      0003FE AF 83            [24] 1476 	mov	r7,dph
+      000400 90r00r27         [24] 1477 	mov	dptr,#_fetch_number_scanned_digit_65536_50
+      000403 EE               [12] 1478 	mov	a,r6
+      000404 F0               [24] 1479 	movx	@dptr,a
+                                   1480 ;	uart.c:200: if(((scanned_digit >= '0') && (scanned_digit <= '9'))||
+      000405 BE 30 00         [24] 1481 	cjne	r6,#0x30,00154$
+      000408                       1482 00154$:
+      000408 40 05            [24] 1483 	jc	00108$
+      00040A EE               [12] 1484 	mov	a,r6
+      00040B 24 C6            [12] 1485 	add	a,#0xff - 0x39
+      00040D 50 14            [24] 1486 	jnc	00103$
+      00040F                       1487 00108$:
+                                   1488 ;	uart.c:201: ((scanned_digit >= 'a') && (scanned_digit <= 'f'))||
+      00040F BE 61 00         [24] 1489 	cjne	r6,#0x61,00157$
+      000412                       1490 00157$:
+      000412 40 05            [24] 1491 	jc	00110$
+      000414 EE               [12] 1492 	mov	a,r6
+      000415 24 99            [12] 1493 	add	a,#0xff - 0x66
+      000417 50 0A            [24] 1494 	jnc	00103$
+      000419                       1495 00110$:
+                                   1496 ;	uart.c:202: ((scanned_digit >= 'A') && (scanned_digit <= 'F')))
+      000419 BE 41 00         [24] 1497 	cjne	r6,#0x41,00160$
+      00041C                       1498 00160$:
+      00041C 40 41            [24] 1499 	jc	00104$
+      00041E EE               [12] 1500 	mov	a,r6
+      00041F 24 B9            [12] 1501 	add	a,#0xff - 0x46
+      000421 40 3C            [24] 1502 	jc	00104$
+      000423                       1503 00103$:
+                                   1504 ;	uart.c:204: putchar(scanned_digit);
+      000423 8E 05            [24] 1505 	mov	ar5,r6
+      000425 7F 00            [12] 1506 	mov	r7,#0x00
+      000427 8D 82            [24] 1507 	mov	dpl,r5
+      000429 8F 83            [24] 1508 	mov	dph,r7
+      00042B C0 06            [24] 1509 	push	ar6
+      00042D 12r00r00         [24] 1510 	lcall	_putchar
+      000430 D0 06            [24] 1511 	pop	ar6
+                                   1512 ;	uart.c:205: digit_array[digit_counter]=char_to_int(scanned_digit);
+      000432 90r00r3C         [24] 1513 	mov	dptr,#_fetch_number_digit_counter_65536_50
+      000435 E0               [24] 1514 	movx	a,@dptr
+      000436 FF               [12] 1515 	mov	r7,a
+      000437 24r28            [12] 1516 	add	a,#_fetch_number_digit_array_65536_50
+      000439 FC               [12] 1517 	mov	r4,a
+      00043A E4               [12] 1518 	clr	a
+      00043B 34s00            [12] 1519 	addc	a,#(_fetch_number_digit_array_65536_50 >> 8)
+      00043D FD               [12] 1520 	mov	r5,a
+      00043E 8E 82            [24] 1521 	mov	dpl,r6
+      000440 C0 07            [24] 1522 	push	ar7
+      000442 C0 05            [24] 1523 	push	ar5
+      000444 C0 04            [24] 1524 	push	ar4
+      000446 12r00rCA         [24] 1525 	lcall	_char_to_int
+      000449 AB 82            [24] 1526 	mov	r3,dpl
+      00044B D0 04            [24] 1527 	pop	ar4
+      00044D D0 05            [24] 1528 	pop	ar5
+      00044F D0 07            [24] 1529 	pop	ar7
+      000451 8C 82            [24] 1530 	mov	dpl,r4
+      000453 8D 83            [24] 1531 	mov	dph,r5
+      000455 EB               [12] 1532 	mov	a,r3
+      000456 F0               [24] 1533 	movx	@dptr,a
+                                   1534 ;	uart.c:206: digit_counter++;
+      000457 90r00r3C         [24] 1535 	mov	dptr,#_fetch_number_digit_counter_65536_50
+      00045A EF               [12] 1536 	mov	a,r7
+      00045B 04               [12] 1537 	inc	a
+      00045C F0               [24] 1538 	movx	@dptr,a
+      00045D 80 8F            [24] 1539 	sjmp	00111$
+      00045F                       1540 00104$:
+                                   1541 ;	uart.c:208: else if(scanned_digit==8) //check for backspace
+      00045F BE 08 02         [24] 1542 	cjne	r6,#0x08,00163$
+      000462 80 03            [24] 1543 	sjmp	00164$
+      000464                       1544 00163$:
+      000464 02r03rEE         [24] 1545 	ljmp	00111$
+      000467                       1546 00164$:
+                                   1547 ;	uart.c:210: putchar(8); //print backspace
+      000467 90 00 08         [24] 1548 	mov	dptr,#0x0008
+      00046A 12r00r00         [24] 1549 	lcall	_putchar
+                                   1550 ;	uart.c:211: putchar(32); //print space
+      00046D 90 00 20         [24] 1551 	mov	dptr,#0x0020
+      000470 12r00r00         [24] 1552 	lcall	_putchar
+                                   1553 ;	uart.c:212: putchar(8); //print backspace
+      000473 90 00 08         [24] 1554 	mov	dptr,#0x0008
+      000476 12r00r00         [24] 1555 	lcall	_putchar
+                                   1556 ;	uart.c:213: digit_counter--;
+      000479 90r00r3C         [24] 1557 	mov	dptr,#_fetch_number_digit_counter_65536_50
+      00047C E0               [24] 1558 	movx	a,@dptr
+      00047D 14               [12] 1559 	dec	a
+      00047E F0               [24] 1560 	movx	@dptr,a
+      00047F 02r03rEE         [24] 1561 	ljmp	00111$
+                                   1562 ;	uart.c:216: for(i=0;i<digit_counter;i++)
+      000482                       1563 00127$:
+      000482 90r00r26         [24] 1564 	mov	dptr,#_fetch_number_base_65536_49
+      000485 E0               [24] 1565 	movx	a,@dptr
+      000486 FF               [12] 1566 	mov	r7,a
+      000487 90r00r3C         [24] 1567 	mov	dptr,#_fetch_number_digit_counter_65536_50
+      00048A E0               [24] 1568 	movx	a,@dptr
+      00048B FE               [12] 1569 	mov	r6,a
+      00048C 7D 00            [12] 1570 	mov	r5,#0x00
+      00048E                       1571 00116$:
+      00048E C3               [12] 1572 	clr	c
+      00048F ED               [12] 1573 	mov	a,r5
+      000490 9E               [12] 1574 	subb	a,r6
+      000491 50 57            [24] 1575 	jnc	00114$
+                                   1576 ;	uart.c:218: number*= base;
+      000493 90r00r3D         [24] 1577 	mov	dptr,#_fetch_number_number_65536_50
+      000496 E0               [24] 1578 	movx	a,@dptr
+      000497 FB               [12] 1579 	mov	r3,a
+      000498 A3               [24] 1580 	inc	dptr
+      000499 E0               [24] 1581 	movx	a,@dptr
+      00049A FC               [12] 1582 	mov	r4,a
+      00049B 90r00r00         [24] 1583 	mov	dptr,#__mulint_PARM_2
+      00049E EF               [12] 1584 	mov	a,r7
+      00049F F0               [24] 1585 	movx	@dptr,a
+      0004A0 E4               [12] 1586 	clr	a
+      0004A1 A3               [24] 1587 	inc	dptr
+      0004A2 F0               [24] 1588 	movx	@dptr,a
+      0004A3 8B 82            [24] 1589 	mov	dpl,r3
+      0004A5 8C 83            [24] 1590 	mov	dph,r4
+      0004A7 C0 07            [24] 1591 	push	ar7
+      0004A9 C0 06            [24] 1592 	push	ar6
+      0004AB C0 05            [24] 1593 	push	ar5
+      0004AD 12r00r00         [24] 1594 	lcall	__mulint
+      0004B0 E5 82            [12] 1595 	mov	a,dpl
+      0004B2 85 83 F0         [24] 1596 	mov	b,dph
+      0004B5 D0 05            [24] 1597 	pop	ar5
+      0004B7 D0 06            [24] 1598 	pop	ar6
+      0004B9 D0 07            [24] 1599 	pop	ar7
+      0004BB 90r00r3D         [24] 1600 	mov	dptr,#_fetch_number_number_65536_50
+      0004BE F0               [24] 1601 	movx	@dptr,a
+      0004BF E5 F0            [12] 1602 	mov	a,b
+      0004C1 A3               [24] 1603 	inc	dptr
+      0004C2 F0               [24] 1604 	movx	@dptr,a
+                                   1605 ;	uart.c:219: number+= digit_array[i];
+      0004C3 ED               [12] 1606 	mov	a,r5
+      0004C4 24r28            [12] 1607 	add	a,#_fetch_number_digit_array_65536_50
+      0004C6 F5 82            [12] 1608 	mov	dpl,a
+      0004C8 E4               [12] 1609 	clr	a
+      0004C9 34s00            [12] 1610 	addc	a,#(_fetch_number_digit_array_65536_50 >> 8)
+      0004CB F5 83            [12] 1611 	mov	dph,a
+      0004CD E0               [24] 1612 	movx	a,@dptr
+      0004CE FC               [12] 1613 	mov	r4,a
+      0004CF 7B 00            [12] 1614 	mov	r3,#0x00
+      0004D1 90r00r3D         [24] 1615 	mov	dptr,#_fetch_number_number_65536_50
+      0004D4 E0               [24] 1616 	movx	a,@dptr
+      0004D5 F9               [12] 1617 	mov	r1,a
+      0004D6 A3               [24] 1618 	inc	dptr
+      0004D7 E0               [24] 1619 	movx	a,@dptr
+      0004D8 FA               [12] 1620 	mov	r2,a
+      0004D9 EC               [12] 1621 	mov	a,r4
+      0004DA 29               [12] 1622 	add	a,r1
+      0004DB F9               [12] 1623 	mov	r1,a
+      0004DC EB               [12] 1624 	mov	a,r3
+      0004DD 3A               [12] 1625 	addc	a,r2
+      0004DE FA               [12] 1626 	mov	r2,a
+      0004DF 90r00r3D         [24] 1627 	mov	dptr,#_fetch_number_number_65536_50
+      0004E2 E9               [12] 1628 	mov	a,r1
+      0004E3 F0               [24] 1629 	movx	@dptr,a
+      0004E4 EA               [12] 1630 	mov	a,r2
+      0004E5 A3               [24] 1631 	inc	dptr
+      0004E6 F0               [24] 1632 	movx	@dptr,a
+                                   1633 ;	uart.c:216: for(i=0;i<digit_counter;i++)
+      0004E7 0D               [12] 1634 	inc	r5
+      0004E8 80 A4            [24] 1635 	sjmp	00116$
+      0004EA                       1636 00114$:
+                                   1637 ;	uart.c:221: return number;
+      0004EA 90r00r3D         [24] 1638 	mov	dptr,#_fetch_number_number_65536_50
+      0004ED E0               [24] 1639 	movx	a,@dptr
+      0004EE FE               [12] 1640 	mov	r6,a
+      0004EF A3               [24] 1641 	inc	dptr
+      0004F0 E0               [24] 1642 	movx	a,@dptr
+                                   1643 ;	uart.c:222: }
+      0004F1 8E 82            [24] 1644 	mov	dpl,r6
+      0004F3 F5 83            [12] 1645 	mov	dph,a
+      0004F5 22               [24] 1646 	ret
+                                   1647 ;------------------------------------------------------------
+                                   1648 ;Allocation info for local variables in function 'ms_delay'
+                                   1649 ;------------------------------------------------------------
+                                   1650 ;time                      Allocated with name '_ms_delay_time_65536_56'
+                                   1651 ;i                         Allocated with name '_ms_delay_i_65536_57'
+                                   1652 ;j                         Allocated with name '_ms_delay_j_65536_57'
+                                   1653 ;sloc0                     Allocated with name '_ms_delay_sloc0_1_0'
+                                   1654 ;------------------------------------------------------------
+                                   1655 ;	uart.c:224: void ms_delay(uint32_t time)
+                                   1656 ;	-----------------------------------------
+                                   1657 ;	 function ms_delay
+                                   1658 ;	-----------------------------------------
+      0004F6                       1659 _ms_delay:
+      0004F6 AF 82            [24] 1660 	mov	r7,dpl
+      0004F8 AE 83            [24] 1661 	mov	r6,dph
+      0004FA AD F0            [24] 1662 	mov	r5,b
+      0004FC FC               [12] 1663 	mov	r4,a
+      0004FD 90r00r3F         [24] 1664 	mov	dptr,#_ms_delay_time_65536_56
+      000500 EF               [12] 1665 	mov	a,r7
+      000501 F0               [24] 1666 	movx	@dptr,a
+      000502 EE               [12] 1667 	mov	a,r6
+      000503 A3               [24] 1668 	inc	dptr
+      000504 F0               [24] 1669 	movx	@dptr,a
+      000505 ED               [12] 1670 	mov	a,r5
+      000506 A3               [24] 1671 	inc	dptr
+      000507 F0               [24] 1672 	movx	@dptr,a
+      000508 EC               [12] 1673 	mov	a,r4
+      000509 A3               [24] 1674 	inc	dptr
+      00050A F0               [24] 1675 	movx	@dptr,a
+                                   1676 ;	uart.c:227: for(j=0;j<time;j++)
+      00050B 90r00r3F         [24] 1677 	mov	dptr,#_ms_delay_time_65536_56
+      00050E E0               [24] 1678 	movx	a,@dptr
+      00050F FC               [12] 1679 	mov	r4,a
+      000510 A3               [24] 1680 	inc	dptr
+      000511 E0               [24] 1681 	movx	a,@dptr
+      000512 FD               [12] 1682 	mov	r5,a
+      000513 A3               [24] 1683 	inc	dptr
+      000514 E0               [24] 1684 	movx	a,@dptr
+      000515 FE               [12] 1685 	mov	r6,a
+      000516 A3               [24] 1686 	inc	dptr
+      000517 E0               [24] 1687 	movx	a,@dptr
+      000518 FF               [12] 1688 	mov	r7,a
+      000519 78 00            [12] 1689 	mov	r0,#0x00
+      00051B 79 00            [12] 1690 	mov	r1,#0x00
+      00051D 7A 00            [12] 1691 	mov	r2,#0x00
+      00051F 7B 00            [12] 1692 	mov	r3,#0x00
+      000521                       1693 00107$:
+      000521 C3               [12] 1694 	clr	c
+      000522 E8               [12] 1695 	mov	a,r0
+      000523 9C               [12] 1696 	subb	a,r4
+      000524 E9               [12] 1697 	mov	a,r1
+      000525 9D               [12] 1698 	subb	a,r5
+      000526 EA               [12] 1699 	mov	a,r2
+      000527 9E               [12] 1700 	subb	a,r6
+      000528 EB               [12] 1701 	mov	a,r3
+      000529 9F               [12] 1702 	subb	a,r7
+      00052A 50 37            [24] 1703 	jnc	00102$
+                                   1704 ;	uart.c:229: for(i=0;i<1120;i++); //1 ms
+      00052C 75*00 60         [24] 1705 	mov	_ms_delay_sloc0_1_0,#0x60
+      00052F 75*01 04         [24] 1706 	mov	(_ms_delay_sloc0_1_0 + 1),#0x04
+      000532 E4               [12] 1707 	clr	a
+      000533 F5*02            [12] 1708 	mov	(_ms_delay_sloc0_1_0 + 2),a
+      000535 F5*03            [12] 1709 	mov	(_ms_delay_sloc0_1_0 + 3),a
+      000537                       1710 00105$:
+      000537 15*00            [12] 1711 	dec	_ms_delay_sloc0_1_0
+      000539 74 FF            [12] 1712 	mov	a,#0xff
+      00053B B5*00 0C         [24] 1713 	cjne	a,_ms_delay_sloc0_1_0,00130$
+      00053E 15*01            [12] 1714 	dec	(_ms_delay_sloc0_1_0 + 1)
+      000540 B5*01 07         [24] 1715 	cjne	a,(_ms_delay_sloc0_1_0 + 1),00130$
+      000543 15*02            [12] 1716 	dec	(_ms_delay_sloc0_1_0 + 2)
+      000545 B5*02 02         [24] 1717 	cjne	a,(_ms_delay_sloc0_1_0 + 2),00130$
+      000548 15*03            [12] 1718 	dec	(_ms_delay_sloc0_1_0 + 3)
+      00054A                       1719 00130$:
+      00054A E5*00            [12] 1720 	mov	a,_ms_delay_sloc0_1_0
+      00054C 45*01            [12] 1721 	orl	a,(_ms_delay_sloc0_1_0 + 1)
+      00054E 45*02            [12] 1722 	orl	a,(_ms_delay_sloc0_1_0 + 2)
+      000550 45*03            [12] 1723 	orl	a,(_ms_delay_sloc0_1_0 + 3)
+      000552 70 E3            [24] 1724 	jnz	00105$
+                                   1725 ;	uart.c:227: for(j=0;j<time;j++)
+      000554 08               [12] 1726 	inc	r0
+      000555 B8 00 09         [24] 1727 	cjne	r0,#0x00,00132$
+      000558 09               [12] 1728 	inc	r1
+      000559 B9 00 05         [24] 1729 	cjne	r1,#0x00,00132$
+      00055C 0A               [12] 1730 	inc	r2
+      00055D BA 00 C1         [24] 1731 	cjne	r2,#0x00,00107$
+      000560 0B               [12] 1732 	inc	r3
+      000561                       1733 00132$:
+      000561 80 BE            [24] 1734 	sjmp	00107$
+      000563                       1735 00102$:
+                                   1736 ;	uart.c:231: return;
+                                   1737 ;	uart.c:232: }
+      000563 22               [24] 1738 	ret
+                                   1739 ;------------------------------------------------------------
+                                   1740 ;Allocation info for local variables in function 'us_delay'
+                                   1741 ;------------------------------------------------------------
+                                   1742 ;sloc0                     Allocated with name '_us_delay_sloc0_1_0'
+                                   1743 ;sloc1                     Allocated with name '_us_delay_sloc1_1_0'
+                                   1744 ;time                      Allocated with name '_us_delay_time_65536_61'
+                                   1745 ;i                         Allocated with name '_us_delay_i_65536_62'
+                                   1746 ;------------------------------------------------------------
+                                   1747 ;	uart.c:234: void us_delay(uint32_t time)
+                                   1748 ;	-----------------------------------------
+                                   1749 ;	 function us_delay
+                                   1750 ;	-----------------------------------------
+      000564                       1751 _us_delay:
+      000564 AF 82            [24] 1752 	mov	r7,dpl
+      000566 AE 83            [24] 1753 	mov	r6,dph
+      000568 AD F0            [24] 1754 	mov	r5,b
+      00056A FC               [12] 1755 	mov	r4,a
+      00056B 90r00r43         [24] 1756 	mov	dptr,#_us_delay_time_65536_61
+      00056E EF               [12] 1757 	mov	a,r7
+      00056F F0               [24] 1758 	movx	@dptr,a
+      000570 EE               [12] 1759 	mov	a,r6
+      000571 A3               [24] 1760 	inc	dptr
+      000572 F0               [24] 1761 	movx	@dptr,a
+      000573 ED               [12] 1762 	mov	a,r5
+      000574 A3               [24] 1763 	inc	dptr
+      000575 F0               [24] 1764 	movx	@dptr,a
+      000576 EC               [12] 1765 	mov	a,r4
+      000577 A3               [24] 1766 	inc	dptr
+      000578 F0               [24] 1767 	movx	@dptr,a
+                                   1768 ;	uart.c:237: for(i=0;i<(1.12*time);i++); //1 tick 1 us
+      000579 90r00r43         [24] 1769 	mov	dptr,#_us_delay_time_65536_61
+      00057C E0               [24] 1770 	movx	a,@dptr
+      00057D F5*0C            [12] 1771 	mov	_us_delay_sloc0_1_0,a
+      00057F A3               [24] 1772 	inc	dptr
+      000580 E0               [24] 1773 	movx	a,@dptr
+      000581 F5*0D            [12] 1774 	mov	(_us_delay_sloc0_1_0 + 1),a
+      000583 A3               [24] 1775 	inc	dptr
+      000584 E0               [24] 1776 	movx	a,@dptr
+      000585 F5*0E            [12] 1777 	mov	(_us_delay_sloc0_1_0 + 2),a
+      000587 A3               [24] 1778 	inc	dptr
+      000588 E0               [24] 1779 	movx	a,@dptr
+      000589 F5*0F            [12] 1780 	mov	(_us_delay_sloc0_1_0 + 3),a
+      00058B 78 00            [12] 1781 	mov	r0,#0x00
+      00058D 79 00            [12] 1782 	mov	r1,#0x00
+      00058F 7A 00            [12] 1783 	mov	r2,#0x00
+      000591 7B 00            [12] 1784 	mov	r3,#0x00
+      000593                       1785 00103$:
+      000593 85*0C 82         [24] 1786 	mov	dpl,_us_delay_sloc0_1_0
+      000596 85*0D 83         [24] 1787 	mov	dph,(_us_delay_sloc0_1_0 + 1)
+      000599 85*0E F0         [24] 1788 	mov	b,(_us_delay_sloc0_1_0 + 2)
+      00059C E5*0F            [12] 1789 	mov	a,(_us_delay_sloc0_1_0 + 3)
+      00059E C0 03            [24] 1790 	push	ar3
+      0005A0 C0 02            [24] 1791 	push	ar2
+      0005A2 C0 01            [24] 1792 	push	ar1
+      0005A4 C0 00            [24] 1793 	push	ar0
+      0005A6 12r00r00         [24] 1794 	lcall	___ulong2fs
+      0005A9 AC 82            [24] 1795 	mov	r4,dpl
+      0005AB AD 83            [24] 1796 	mov	r5,dph
+      0005AD AE F0            [24] 1797 	mov	r6,b
+      0005AF FF               [12] 1798 	mov	r7,a
+      0005B0 C0 04            [24] 1799 	push	ar4
+      0005B2 C0 05            [24] 1800 	push	ar5
+      0005B4 C0 06            [24] 1801 	push	ar6
+      0005B6 C0 07            [24] 1802 	push	ar7
+      0005B8 90 5C 29         [24] 1803 	mov	dptr,#0x5c29
+      0005BB 75 F0 8F         [24] 1804 	mov	b,#0x8f
+      0005BE 74 3F            [12] 1805 	mov	a,#0x3f
+      0005C0 12r00r00         [24] 1806 	lcall	___fsmul
+      0005C3 85 82*10         [24] 1807 	mov	_us_delay_sloc1_1_0,dpl
+      0005C6 85 83*11         [24] 1808 	mov	(_us_delay_sloc1_1_0 + 1),dph
+      0005C9 85 F0*12         [24] 1809 	mov	(_us_delay_sloc1_1_0 + 2),b
+      0005CC F5*13            [12] 1810 	mov	(_us_delay_sloc1_1_0 + 3),a
+      0005CE E5 81            [12] 1811 	mov	a,sp
+      0005D0 24 FC            [12] 1812 	add	a,#0xfc
+      0005D2 F5 81            [12] 1813 	mov	sp,a
+      0005D4 D0 00            [24] 1814 	pop	ar0
+      0005D6 D0 01            [24] 1815 	pop	ar1
+      0005D8 D0 02            [24] 1816 	pop	ar2
+      0005DA D0 03            [24] 1817 	pop	ar3
+      0005DC 88 82            [24] 1818 	mov	dpl,r0
+      0005DE 89 83            [24] 1819 	mov	dph,r1
+      0005E0 8A F0            [24] 1820 	mov	b,r2
+      0005E2 EB               [12] 1821 	mov	a,r3
+      0005E3 C0 03            [24] 1822 	push	ar3
+      0005E5 C0 02            [24] 1823 	push	ar2
+      0005E7 C0 01            [24] 1824 	push	ar1
+      0005E9 C0 00            [24] 1825 	push	ar0
+      0005EB 12r00r00         [24] 1826 	lcall	___ulong2fs
+      0005EE AC 82            [24] 1827 	mov	r4,dpl
+      0005F0 AD 83            [24] 1828 	mov	r5,dph
+      0005F2 AE F0            [24] 1829 	mov	r6,b
+      0005F4 FF               [12] 1830 	mov	r7,a
+      0005F5 C0*10            [24] 1831 	push	_us_delay_sloc1_1_0
+      0005F7 C0*11            [24] 1832 	push	(_us_delay_sloc1_1_0 + 1)
+      0005F9 C0*12            [24] 1833 	push	(_us_delay_sloc1_1_0 + 2)
+      0005FB C0*13            [24] 1834 	push	(_us_delay_sloc1_1_0 + 3)
+      0005FD 8C 82            [24] 1835 	mov	dpl,r4
+      0005FF 8D 83            [24] 1836 	mov	dph,r5
+      000601 8E F0            [24] 1837 	mov	b,r6
+      000603 EF               [12] 1838 	mov	a,r7
+      000604 12r00r00         [24] 1839 	lcall	___fslt
+      000607 AF 82            [24] 1840 	mov	r7,dpl
+      000609 E5 81            [12] 1841 	mov	a,sp
+      00060B 24 FC            [12] 1842 	add	a,#0xfc
+      00060D F5 81            [12] 1843 	mov	sp,a
+      00060F D0 00            [24] 1844 	pop	ar0
+      000611 D0 01            [24] 1845 	pop	ar1
+      000613 D0 02            [24] 1846 	pop	ar2
+      000615 D0 03            [24] 1847 	pop	ar3
+      000617 EF               [12] 1848 	mov	a,r7
+      000618 60 10            [24] 1849 	jz	00101$
+      00061A 08               [12] 1850 	inc	r0
+      00061B B8 00 09         [24] 1851 	cjne	r0,#0x00,00117$
+      00061E 09               [12] 1852 	inc	r1
+      00061F B9 00 05         [24] 1853 	cjne	r1,#0x00,00117$
+      000622 0A               [12] 1854 	inc	r2
+      000623 BA 00 01         [24] 1855 	cjne	r2,#0x00,00117$
+      000626 0B               [12] 1856 	inc	r3
+      000627                       1857 00117$:
+      000627 02r05r93         [24] 1858 	ljmp	00103$
+      00062A                       1859 00101$:
+                                   1860 ;	uart.c:238: return;
+                                   1861 ;	uart.c:239: }
+      00062A 22               [24] 1862 	ret
+                                   1863 	.area CSEG    (CODE)
+                                   1864 	.area CONST   (CODE)
+                                   1865 	.area XINIT   (CODE)
+                                   1866 	.area CABS    (ABS,CODE)
