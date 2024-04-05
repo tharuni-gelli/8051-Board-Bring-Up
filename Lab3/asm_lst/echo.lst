@@ -1,0 +1,60 @@
+A51 MACRO ASSEMBLER  ECHO                                                                 10/12/2023 02:21:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\echo.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE echo.asm SET(SMALL) DEBUG PRINT(.\Listings\echo.lst) OBJECT(.\Objects\e
+                      cho.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0x0000 ; Start the program at address 0
+                       2     
+                       3     ; Define constants
+  0099                 4     UART_DATA equ 0x99   ; UART Data Register
+  0098                 5     UART_CTRL equ 0x98   ; UART Control Register
+                       6     
+                       7     ; Initialize the serial port for 9600 baud
+0000 758920            8     MOV TMOD, #0x20      ; Timer 1, Mode 2 (8-bit auto-reload)
+0003 758DFD            9     MOV TH1, #0xFD       ; Set the baud rate for 9600 baud (for 11.0592 MHz crystal)
+0006 D28E             10     SETB TR1             ; Start Timer 1
+0008 D299             11     SETB TI              ; Set TI (Transmit Interrupt) to enable transmission
+000A 7455             12     MOV A, #'U'        ; Load 'U' into the accumulator
+                      13     
+000C                  14     MAIN:
+                      15       ; Continuously transmit 'U'
+                      16       
+000C F599             17       MOV SBUF, A        ; Send 'U' to UART Data Register
+000E                  18       HERE:
+000E 3099FD           19         JNB TI, HERE     ; Wait for TI to be set (transmission complete)
+0011 C299             20         CLR TI            ; Clear TI for the next transmission
+0013                  21             HERE1:
+0013 E599             22               MOV A,SBUF
+0015 C298             23               CLR RI
+0017 80F3             24         SJMP MAIN        ; Repeat the loop indefinitely
+                      25     end
+A51 MACRO ASSEMBLER  ECHO                                                                 10/12/2023 02:21:47 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   000EH   A   
+HERE1. . . . . . .  C ADDR   0013H   A   
+MAIN . . . . . . .  C ADDR   000CH   A   
+RI . . . . . . . .  B ADDR   0098H.0 A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TI . . . . . . . .  B ADDR   0098H.1 A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+UART_CTRL. . . . .  N NUMB   0098H   A   
+UART_DATA. . . . .  N NUMB   0099H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
