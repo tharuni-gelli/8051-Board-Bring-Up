@@ -1,0 +1,1 @@
+These files of efm8 are from lab1. For lab 2, I have not done any efm8 assembly program for lab2. I have used keil uvision for assembly programming in lab 2.
