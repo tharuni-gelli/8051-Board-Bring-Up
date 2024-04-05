@@ -1,0 +1,36 @@
+Name     lab4 ;
+PartNo   00 ;
+Date     10-11-2023 ;
+Revision 01 ;
+Designer Engineer ;
+Company  University of colorado boulder ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN  2   =   A15; /* Pin 2 of SPLD as input for A15 of 8051 */ 
+PIN  3  =    A14; /* Pin 3 of SPLD as input for A14 of 8051 */ 
+PIN  4   =  A13; /*  Pin 4 of SPLD as input for A13 of 8051 */ 
+PIN  5   =  A12; /*  Pin 5 of SPLD as input for A12 of 8051 */ 
+PIN  8   =  A11; /*  Pin 8 of SPLD as input for A11 of 8051 */ 
+PIN  9   =  A10; /*  Pin 9 of SPLD as input for A10 of 8051 */ 
+PIN  6  =   RD; /*   Pin 6 of SPLD as input for RD of 8051 */ 
+PIN  7  =   PSEN; /* Pin 7 of SPLD as input for PSEN of 8051 */ 
+PIN  12  =  WR; /*   Pin 12 of SPLD as input for WR of 8051  */ 
+
+/* *************** OUTPUT PINS *********************/
+PIN  18  =  READ; /*      Pin 18 as output pin  */ 
+PIN  19  =  CHIPENABLE; /*  Pin 19 as output pin */ 
+PIN  17  =  LCDENABLE; /*  Pin 17 as output pin  */ 
+
+/* *************** LOGIC *********************/
+
+READ = RD & PSEN; /* For reading only PSEN is high */
+CHIPENABLE = ! (A10 # A11 # A12 # A13 # A14 # A15) # A15; /* For addresses in range of 0x0400to 0x7FFF */
+LCDENABLE = (A15 & (RD $ WR)); /* Memory mapping LCD */
+
+
+
+
+
