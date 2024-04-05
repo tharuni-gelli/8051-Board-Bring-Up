@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1697847425 source:c:\users\tharuni gelli\onedrive\documents\esd\demo\main.c
+	<mcs51/8051.h>
+	<at89c51ed2.h>
+	<mcs51reg.h>
+	<stdio.h>
+	<stdint.h>
+	<stdlib.h>
+
+1697824227 source:c:\users\tharuni gelli\onedrive\documents\esd\demo\_heap.c
+

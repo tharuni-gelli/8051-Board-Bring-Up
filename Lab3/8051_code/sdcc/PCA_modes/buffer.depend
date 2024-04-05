@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1698384259 source:c:\users\tharuni gelli\onedrive\documents\esd\buffer\main.c
+	<stdio.h>
+	<stdlib.h>
+	<at89c51ed2.h>
+	<mcs51reg.h>
+	<stdint.h>
+	<mcs51/8051.h>
+
