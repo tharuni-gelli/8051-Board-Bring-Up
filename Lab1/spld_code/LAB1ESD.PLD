@@ -1,0 +1,29 @@
+Name     LAB1ESD ;
+PartNo   00 ;
+Date     08-09-2023 ;
+Revision 01 ;
+Designer Tharuni_gelli_Engineer ;
+Company  University of colorado boulder ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN  2 =  A15; /*                                 */ 
+PIN  3 =  A14; /*                                 */ 
+PIN  4 =  A13; /*                                 */ 
+PIN  5 =  A12; /*                                 */ 
+PIN  6 =  RD; /*                                 */ 
+PIN  7 =  PSEN; /*                                 */ 
+
+/* *************** OUTPUT PINS *********************/
+PIN  12   = READ; /*                                 */ 
+PIN  13   = CSPERIPH; /*                                 */ 
+
+/* LOGIC */
+
+READ= RD & PSEN;
+CSPERIPH = !(A15 & A14 & A13 & A12);
+
+
+

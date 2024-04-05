@@ -1,0 +1,26 @@
+Name     lab2part1 ;
+PartNo   00 ;
+Date     28-09-2023 ;
+Revision 01 ;
+Designer Engineer ;
+Company  University of colorado boulder ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN  2   =   A15                      ; /*                                 */ 
+PIN  7  =    PSEN                     ; /*                                 */ 
+
+/* *************** OUTPUT PINS *********************/
+PIN  18  =  READ                       ; /*                                 */ 
+PIN  19  =  CSPERIPH                      ; /*                                 */ 
+
+/* *************** LOGIC *********************/
+
+READ = PSEN;
+CSPERIPH = A15;
+
+
+
+

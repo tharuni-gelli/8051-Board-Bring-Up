@@ -1,0 +1,40 @@
+Name     LAB1ESD;
+PartNo   00;
+Date     08-09-2023;
+Revision 01;
+Designer Tharuni_gelli_Engineer;
+Company  University of colorado boulder;
+Assembly None;
+Location ;
+Device   g16v8a;
+
+
+ORDER: A15, %3, A14, %3, A13, %3, A12, %3, RD, %3, PSEN, %3, READ, %3, CSPERIPH; 
+
+
+VECTORS:
+111111**
+111110**
+111101**
+111011**
+110111**
+101111**
+011111**
+100111**
+110011**
+111001**
+111100**
+101010**
+110100**
+100110**
+101001**
+100010**
+111000**
+110001**
+100011**
+000111**
+101011**
+100001**
+000001**
+000011**
+000000**
