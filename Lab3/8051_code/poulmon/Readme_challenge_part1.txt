@@ -1,0 +1,1 @@
+To use paulmon as an on-chip debugger. We have to change a line in extra.asm file. Which makes it to run in single step mode such that we can use paulmon as on chip debugger. In this folder the modifed extra.asm file has been attachted. 
