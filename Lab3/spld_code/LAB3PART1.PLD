@@ -1,0 +1,32 @@
+Name     lab3part1 ;
+PartNo   00 ;
+Date     11-10-2023 ;
+Revision 01 ;
+Designer Engineer ;
+Company  University of colorado boulder ;
+Assembly None ;
+Location  ;
+Device   g16v8a ;
+
+/* *************** INPUT PINS *********************/
+PIN   2 =  A15; /*  Input from atmel address line */ 
+PIN   3 =  A14; /*  Input from atmel address line */ 
+PIN   4 =  A13; /*  Input from atmel address line */ 
+PIN   5 =  A12; /*  Input from atmel address line */ 
+PIN   8 =  A11; /*  Input from atmel address line */ 
+PIN   9 =  A10; /*  Input from atmel address line */ 
+PIN   6 =  RD; /*   Input from atmel address line */ 
+PIN   7 =  PSEN; /* Input from atmel address line */ 
+
+/* *************** OUTPUT PINS *********************/
+PIN   18 = READ; /*   declaring output variables*/ 
+PIN   19 = CHIPENABLE; /*  declaring output variables */ 
+
+/* *************** LOGIC *********************/ 
+
+READ = RD & PSEN; /* to output enable of NVRAM */
+CHIPENABLE = ! (A10 # A11 # A12 # A13 # A14 # A15) # A15; /* to chip enable of NVRAM */
+
+
+
+
