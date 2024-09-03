@@ -22,4 +22,3 @@ In the Embedded System Design course, I embarked on an immersive journey through
 •	Utilizing the STM32F4 Discovery board to develop applications, where I engaged with peripheral configuration registers directly in C to manipulate system clocks, GPIOs, and interrupt vectors, thereby gaining a deeper understanding of microcontroller hardware abstraction layers.
 •	Employing I2C and SPI protocols for peripheral communication, showcasing my adeptness in serial communication interfaces and protocol implementation.
 •	Integrating an LCD display as a memory-mapped peripheral, which involved configuring data and control lines to interact with the LCD using custom software routines, demonstrating an understanding of both hardware interfacing and software control mechanisms.
-![wp7406306-motivational-desktop-4k-wallpapers](https://github.com/user-attachments/assets/3bc2c092-27a4-4180-ac49-9bd933fac6f4)
